@@ -1,3 +1,20 @@
+# Introduction
+This repo contains the specs and samples for the vnext features of Azure SignalR Service.
+
+## VNEXT Features
+
+* [Serverless WebSocket](./serverless-websocket)
+    
+    Azure SignalR is able to accept direct WebSocket connection and forward every message frame to the Serverless Upstream target.
+    * Azure SignalR to maintain your connections
+    * Your Upstream to handle the business logic.
+    * Manipulate your connections through Azure SignalR.
+    
+    Check the [specs here](./serverless-websocket/specs/runtime-websocket-serverless.md).
+
+    Demos:
+    * [A simple demo](./serverless-websocket/samples/simple-chat) with Azure Function and Azure SignalR Serverless WebSocket
+    * [An advanced chatroom](./serverless-websocket/samples/advanced-chatroom) with Azure Function and Azure SignalR Serverless WebSocket and Storage
 
 # Contributing
 
