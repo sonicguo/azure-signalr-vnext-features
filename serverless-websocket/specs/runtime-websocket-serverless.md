@@ -51,7 +51,7 @@
     1. `/ws/client/hubs/{hub}/formats/{text/binary}`
     1. `/ws/client/hubs/{hub}?formats={text/binary}`
     1. `/ws/client?hubs={hub}&format={text/binary}`
-1. Upstream
+1. Upstream <a name="upstream"></a>
     1. Parameterized 
     <a name="upstream" >
         The Upstream URL is parameterized, in this way, the service can support different Upstream URL patterns flexibly. 
