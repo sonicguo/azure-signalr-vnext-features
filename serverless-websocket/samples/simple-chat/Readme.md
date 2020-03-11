@@ -46,5 +46,3 @@ For example, the below screenshot sets the upstream templates for both `chat` an
 5. Visit the chat
 Now it is all set, visit the client page `http://localhost:8088?name={user_name}` with your `{user_name}` to try the Chat.
 ![chat](./images/sample_run.png)
-
->>>>>>> fdb9a47... Add simple chat demo
