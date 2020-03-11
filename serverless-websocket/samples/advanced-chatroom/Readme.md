@@ -31,16 +31,26 @@ With this Private Preview version, we provide a REST API endpoint for you to set
 
 We provide a simple web app https://ws-manage.azurewebsites.net/api/manage deployed for you to easily get and set the current Upstream settings of the service.
 
-Put following into the Set Upstream text area to set the Upstream settings for the service.
+Put following into the Set Upstream text area to set the Upstream settings for the service for the hub `chat`. In this way, you can set different Upstreams for different hubs. You can also define different Upstream patterns depends on different events by setting `eventPattern`, or depends on different categories by setting `categoryPattern`. Please check [Upstream spec](../../specs/runtime-websocket-serverless.md#upstream) for detail
 ```json
 {
     "templates": [
-	{
-        "urlTemplate": "http://(id).ngrok.io/api/messages?event={event}"
-	}
+        {
+            "hubPattern": "chat",
+            "categoryPattern": "*",
+            "eventPattern": "*",
+            "urlTemplate": "http://(id).ngrok.io/api/messages?event={event}"
+        }
     ]
 }
 ```
+
+There are 3 kind of pattern syntax supported. Take the `eventPattern` for example:
+1. `"*"`, it to matches any event name
+2. Combine multiple events with `,`, for example `"connect,disconnect"`, it matches event "connect" and "disconnect"
+3. The single event name, for example, "connect", it matches "connect".
+
+You can define multiple template items in order. With every incoming request, the first matching one takes effect.
 
 ### Run the chat
 Now visit `http://localhost:7071/api/home?name=yourname` and you are ready to chat locally.
