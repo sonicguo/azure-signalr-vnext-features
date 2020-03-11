@@ -5,7 +5,7 @@ Azure SignalR is able to accept direct WebSocket connection and forward every me
 * Your Upstream to handle the business logic.
 * Manipulate your connections through Azure SignalR.
 
-Check the [specs here](./serverless-websocket/specs/runtime-websocket-serverless.md).
+Check the [specs here](./specs/runtime-websocket-serverless.md).
 
 ## Demos
 * [A simple demo](./samples/simple-chat) with Azure Function and Azure SignalR Serverless WebSocket
