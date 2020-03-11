@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A simple WebSocket demo on Azure SignalR Serverless WebSocket">
+
+    <title>A Simple Serverless WebSocket Chat</title>
+</head>
+
+<body>
+    <div id="app">
+        <h5>Current user: <span>%%%___user___%%%</span></h5>
+        <h5>Current endpoint: <span>%%%____URL____%%%</span></h5>
+        <form>
+            <input id="message" type="text">
+            <button id="submit" type="submit">Send</button>
+        </form>
+        <div id="log"></div>
+        <div id="chatbox"></div>
+    </div>
+    <script>
+        const user = '%%%___user___%%%';
+        document.addEventListener('DOMContentLoaded', function () {
+            var log = document.getElementById("log");
+            var message = document.getElementById("message");
+            var chatbox = document.getElementById("chatbox");
+
+            var socket = new WebSocket('%%%____URL____%%%');
+            socket.onopen = function (e) {
+                log.innerText = "Connection opened."
+                socket.send(`Hello I am ${user}`);
+            }
+
+            socket.onmessage = function (e) {
+                chatbox.innerText += "\n" + e.data;
+            }
+            socket.onclose = function (event) {
+                log.innerText = `Connection closed: code=${event.code} reason=${event.reason}`;
+            };
+
+            socket.onerror = function (error) {
+                log.innerText = `Connection error: ${error.message}`;
+            };
+
+            document.getElementById('submit').addEventListener('click', function (event) {
+                event.preventDefault();
+                console.log("Sending " + message.value);
+                socket.send(`${user}: ${message.value}`);
+            });
+        });
+    </script>
+</body>
+
+</html>
