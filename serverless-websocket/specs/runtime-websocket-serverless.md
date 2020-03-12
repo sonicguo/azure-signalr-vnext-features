@@ -14,10 +14,18 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 - Supporting protocols where one protocol message is not bound to a single WebSocket frame is out of scope, e.g. MQTT.
 - Supporting protocols where messages are having context or dependencies to previous messages is out of scope, e.g. streaming protocols.
 
+## Terms
+
+- **Upstream**: An upstream is the application that processes WebSocket connections and messages. This can be an azure function or any other application that can handle HTTP requests.
+- **hub**: A hub is a unit of the isolation, the scope of users and message delivery is constrained to a hub. 
+- **connectionId**: Every WebSocket connection has a unique `connectionId`.
+- **userId**: Every connection has a user id from the authetication result if it is not an anonymous connection.
+
+
 ## Portal Configuration
 
 1. The portal will support configuring WebSocket mode, from CLI and Azure portal. With WebSocket mode, only `/ws` requests are allowed.
-2. The portal will support configuring "Upstream" settings from CLI and Azure portal.
+2. The portal will support configuring Upstream settings from CLI and Azure portal.
 
 ## Authentication
 
@@ -30,13 +38,6 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 1. Anonymous mode
 1. Simple Auth that `code` is provided through the configured Webhook URL.
 1. AAD Auth. Add a client secret in AAD's [App Registrations] and provide the [client secret] to Azure SignalR from portal.
-
-## Terms
-
-- **Upstream**: An upstream is the application that processes WebSocket connections and messages. This can be an azure function or any other application that can handle HTTP requests.
-- **hub**: A hub is a unit of the isolation, the scope of users and message delivery is constrained to a hub. 
-- **connectionId**: Every WebSocket connection has a unique `connectionId`.
-- **userId**: Every connection has a user id from the authetication result if it is not an anonymous connection.
 
 ## Client endpoint
 
@@ -96,9 +97,9 @@ The ASRS server tracks clients and has a result can be used to send messages to 
 | Send message to user | `POST /ws/api/v1/hubs/{hub}/users/{id}`|
 | Send message to connection |`POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
 | Add connection to group |`PUT /ws/api/v1/groups/{group}/connections/{connectionId}`|
-| Remove connection from group|`Delete /ws/api/v1/groups/{group}/connections/{connectionId}`|
+| Remove connection from group|`DELETE /ws/api/v1/groups/{group}/connections/{connectionId}`|
 | Add user to group |`PUT /ws/api/v1/groups/{group}/users/{user}`|
-| Remove user from group|`Delete /ws/api/v1/groups/{group}/users/{user}`|
+| Remove user from group|`DELETE /ws/api/v1/groups/{group}/users/{user}`|
 | Send message to group| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
 | Close connection| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`
             
