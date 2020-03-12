@@ -86,7 +86,7 @@ Hex_encoded(HMAC_SHA256(accessKey, connection-id))
         
 We leverage HTTP protocol to deliver WebSocket connections to Upstream. A single WebSocket connection's lifecyle is as below: Handshake and Connect -> Handle Messages -> Disconnect
         
-Each is a defined **event** and belongs to a **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and deliver the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol) section.
+Each is a defined **event** and belongs to a **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and deliver the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
 
 ### Calling the Client from the Upstream
 
