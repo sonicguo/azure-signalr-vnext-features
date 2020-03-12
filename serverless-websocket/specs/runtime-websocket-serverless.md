@@ -31,8 +31,9 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 
 ### Authentication between client and service
 
-1. Client certificates. Cert details to available via request header `X-ASRS-Client-Cert-Thumbprint`
-1. JWT tokens: *TODO* add more details about generating JWT token.
+1. **Anonymous** - Authentication is handled by the Upstream.
+1. **JWT tokens** - The service validates a JWT token based on the access key. (*TODO* add more details about generating JWT token).
+1. **Client certificates** -  Certificate details to available via request header `X-ASRS-Client-Cert-Thumbprint`
 
 ### Authentication between service and webhook
 1. Anonymous mode
