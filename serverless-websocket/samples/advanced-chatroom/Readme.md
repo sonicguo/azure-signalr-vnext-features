@@ -107,10 +107,10 @@ Azure SignalR provides REST APIs to be used to manipulate connected WebSocket co
 | Broadcast message | `POST /ws/api/v1/hubs/{hub}` |
 | Send message to user | `POST /ws/api/v1/hubs/{hub}/users/{id}`|
 | Send message to connection |`POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
-| Add connection to group |`PUT /ws/api/v1/groups/{group}/connections/{connectionId}`|
-| Remove connection from group|`Delete /ws/api/v1/groups/{group}/connections/{connectionId}`|
-| Add user to group |`PUT /ws/api/v1/groups/{group}/users/{user}`|
-| Remove user from group|`Delete /ws/api/v1/groups/{group}/users/{user}`|
+| Add connection to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Remove connection from group|`Delete /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Add user to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
+| Remove user from group|`Delete /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
 | Send message to group| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
 | Close connection| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`
 
