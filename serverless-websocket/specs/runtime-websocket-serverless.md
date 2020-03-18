@@ -127,7 +127,7 @@ The ASRS server tracks clients and has a result can be used to send messages to 
 * `X-ASRS-User-Id`: `{user-id}`
 * `X-ASRS-User-Claims`: `{user-claims}`
 * `X-ASRS-Signature`: `sha256={connection-id-hash-primary},sha256={connection-id-hash-secondary}`
-* `X-ASRS-Client-Query-String?`: `{query-string}`
+* `X-ASRS-Client-Query?`: `{query-string}`
 * `X-Forwarded-For`: `1.2.3.4, 5.6.7.8`
 * `Date`: `Fri, 10 Jan 2020 01:02:03 GMT`
 
@@ -169,7 +169,7 @@ The service calls the Upstream for every complete WebSocket message.
 * `X-ASRS-User-Id`: `{user-id}`
 * `X-ASRS-User-Claims`: `{user-claims}`
 * `X-ASRS-Signature`: `sha256={connection-id-hash-primary},sha256={connection-id-hash-secondary}`
-* `X-ASRS-Client-Query-String?`: `{query-string}`
+* `X-ASRS-Client-Query?`: `{query-string}`
 * `X-Forwarded-For`: `1.2.3.4, 5.6.7.8`
 * `Date`: `Fri, 10 Jan 2020 01:02:03 GMT`
 * `Content-Type`: `application/octet-stream`(for binary frame)|`text/plain`(for text frame)
@@ -196,7 +196,7 @@ The service calls the Upstream for every complete WebSocket message.
 * `X-ASRS-User-Id`: `{user-id}`
 * `X-ASRS-User-Claims`: `{user-claims}`
 * `X-ASRS-Signature`: `sha256={connection-id-hash-primary},sha256={connection-id-hash-secondary}`
-* `X-ASRS-Client-Query-String?`: `{query-string}`
+* `X-ASRS-Client-Query?`: `{query-string}`
 * `X-Forwarded-For`: `1.2.3.4, 5.6.7.8`
 * `Date`: `Fri, 10 Jan 2020 01:02:03 GMT`
 
