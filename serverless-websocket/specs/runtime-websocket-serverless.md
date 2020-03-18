@@ -39,8 +39,8 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 1. Anonymous mode
 1. Simple Auth that `code` is provided through the configured Webhook URL.
 1. AAD Auth. 
-   1. Add a client secret in AAD's [App Registrations] and provide the [client secret] to Azure SignalR from portal.
-   2. 
+   1. Add a client secret in AAD's [App Registrations] and provide the [client secret] to Azure SignalR through portal/cli.
+   2. Provide the [Identity](https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=dotnet) to Azure SignalR through portal/cli
 
 ## Client endpoint
 
