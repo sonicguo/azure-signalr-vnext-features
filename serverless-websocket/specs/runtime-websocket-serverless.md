@@ -92,7 +92,7 @@ Each is a defined **event** and belongs to a **category**. When event are trigge
 
 ### Calling the Client from the Upstream
 
-The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the REST API to send messages to clients.
+The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the [REST API](./ws.swagger.json) to send messages to clients.
 
 | Actions | REST API |
 |----|----|
