@@ -38,7 +38,9 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 ### Authentication between service and webhook
 1. Anonymous mode
 1. Simple Auth that `code` is provided through the configured Webhook URL.
-1. AAD Auth. Add a client secret in AAD's [App Registrations] and provide the [client secret] to Azure SignalR from portal.
+1. AAD Auth. 
+   1. Add a client secret in AAD's [App Registrations] and provide the [client secret] to Azure SignalR from portal.
+   2. 
 
 ## Client endpoint
 
@@ -97,10 +99,10 @@ The ASRS server tracks clients and has a result can be used to send messages to 
 | Broadcast message | `POST /ws/api/v1/hubs/{hub}` |
 | Send message to user | `POST /ws/api/v1/hubs/{hub}/users/{id}`|
 | Send message to connection |`POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
-| Add connection to group |`PUT /ws/api/v1/groups/{group}/connections/{connectionId}`|
-| Remove connection from group|`DELETE /ws/api/v1/groups/{group}/connections/{connectionId}`|
-| Add user to group |`PUT /ws/api/v1/groups/{group}/users/{user}`|
-| Remove user from group|`DELETE /ws/api/v1/groups/{group}/users/{user}`|
+| Add connection to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Remove connection from group|`DELETE /ws/api/hubs/{hub}/v1/groups/{group}/connections/{connectionId}`|
+| Add user to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
+| Remove user from group|`DELETE /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
 | Send message to group| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
 | Close connection| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`
             
