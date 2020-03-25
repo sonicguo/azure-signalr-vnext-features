@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Azure SignalR Serverless WebSocket",
+    "title": "Azure WebSocket Service REST API",
     "version": "v1"
   },
   "paths": {
@@ -10,27 +10,29 @@
         "tags": [
           "HealthApi"
         ],
-        "summary": "Check the health of the service",
+        "summary": "Get service health status.",
+        "operationId": "HealthApi_GET_Index",
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/IActionResultValueTask"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/IActionResultValueTask"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/IActionResultValueTask"
-                }
-              }
-            }
+            "description": "The service is healthy"
+          },
+          "503": {
+            "description": "The service is temporarily unavailable"
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "HealthApi"
+        ],
+        "summary": "Get service health status.",
+        "operationId": "HealthApi_HEAD_Index",
+        "responses": {
+          "200": {
+            "description": "The service is healthy"
+          },
+          "503": {
+            "description": "The service is temporarily unavailable"
           }
         }
       }
@@ -40,20 +42,32 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Broadcast content inside request body to all the connected connection in the same hub",
+        "summary": "Broadcast content inside request body to all the connected connection in the same hub.",
+        "operationId": "WebSocketConnectionApi_POST_Broadcast",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
-            "description": "The hub is the logic isolation for connections",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
-          "200": {
+          "202": {
             "description": "Success"
           }
         }
@@ -64,11 +78,13 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Send content inside request body to the specific user",
+        "summary": "Send content inside request body to the specific user.",
+        "operationId": "WebSocketConnectionApi_POST_SendToUser",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -77,15 +93,26 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The user identity",
+            "description": "The user Id.",
             "required": true,
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
-          "200": {
+          "202": {
             "description": "Success"
           }
         }
@@ -96,7 +123,51 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Send content inside request body to the specific connection",
+        "summary": "Send content inside request body to the specific connection.",
+        "operationId": "WebSocketConnectionApi_POST_SendToConnection",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "The connection Id.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Check if the connection with the given connectionId exists",
+        "operationId": "WebSocketConnectionApi_GET_CheckConnectionExistence",
         "parameters": [
           {
             "name": "hub",
@@ -118,6 +189,42 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Check if the connection with the given connectionId exists",
+        "operationId": "WebSocketConnectionApi_HEAD_CheckConnectionExistence",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -126,6 +233,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Close the client connection",
+        "operationId": "WebSocketConnectionApi_DELETE_CloseClientConnection",
         "parameters": [
           {
             "name": "hub",
@@ -152,7 +260,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "202": {
             "description": "Success"
           }
         }
@@ -163,11 +271,13 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Send content inside request body to a group of connections",
+        "summary": "Send content inside request body to a group of connections.",
+        "operationId": "WebSocketConnectionApi_POST_GroupBroadcast",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -176,258 +286,26 @@
           {
             "name": "group",
             "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/ws/api/v1/hubs/{hub}/groups/{group}/users/{user}": {
-      "get": {
-        "tags": [
-          "WebSocketConnectionApi"
-        ],
-        "summary": "Check if the user is in the specified group",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "WebSocketConnectionApi"
-        ],
-        "summary": "Add the user to the specified group",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "ttl",
-            "in": "query",
-            "description": "Specifies the seconds that the user exists in the group. If not set, the user lives in the group forever.",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "WebSocketConnectionApi"
-        ],
-        "summary": "Remove all the connections belong to the specified user from the group",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
-    "/ws/api/v1/hubs/{hub}/users/{user}/groups/{group}": {
-      "get": {
-        "tags": [
-          "WebSocketConnectionApi"
-        ],
-        "summary": "Check if the user is in the specified group",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "WebSocketConnectionApi"
-        ],
-        "summary": "Add the user to the specified group",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "ttl",
-            "in": "query",
-            "description": "Specifies the seconds that the user exists in the group. If not set, the user lives in the group forever.",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "WebSocketConnectionApi"
-        ],
-        "summary": "Remove all the connections belong to the specified user from the group",
-        "parameters": [
-          {
-            "name": "hub",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "group",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
+          "202": {
             "description": "Success"
           }
         }
@@ -438,11 +316,13 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Add the connection to the group",
+        "summary": "Add a connection to the target group.",
+        "operationId": "WebSocketConnectionApi_PUT_AddConnectionToGroup",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -451,6 +331,7 @@
           {
             "name": "group",
             "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
             "schema": {
               "type": "string"
@@ -459,6 +340,7 @@
           {
             "name": "connectionId",
             "in": "path",
+            "description": "Target connection Id",
             "required": true,
             "schema": {
               "type": "string"
@@ -468,6 +350,9 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -475,11 +360,13 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Remove the connection from the group",
+        "summary": "Remove a connection from the target group.",
+        "operationId": "WebSocketConnectionApi_DELETE_RemoveConnectionFromGroup",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -488,6 +375,7 @@
           {
             "name": "group",
             "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
             "schema": {
               "type": "string"
@@ -496,6 +384,7 @@
           {
             "name": "connectionId",
             "in": "path",
+            "description": "Target connection Id",
             "required": true,
             "schema": {
               "type": "string"
@@ -505,20 +394,25 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     },
-    "/ws/api/v1/hubs/{hub}/connections/{connectionId}/groups/{group}": {
-      "put": {
+    "/ws/api/v1/hubs/{hub}/groups/{group}/users/{user}": {
+      "get": {
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Add the connection to the group",
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebSocketConnectionApi_GET_CheckUserExistenceInGroup",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -527,14 +421,16 @@
           {
             "name": "group",
             "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "connectionId",
+            "name": "user",
             "in": "path",
+            "description": "Target user Id",
             "required": true,
             "schema": {
               "type": "string"
@@ -544,18 +440,23 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
-      "delete": {
+      "head": {
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Remove the connection from the group",
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebSocketConnectionApi_HEAD_CheckUserExistenceInGroup",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -564,14 +465,16 @@
           {
             "name": "group",
             "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "connectionId",
+            "name": "user",
             "in": "path",
+            "description": "Target user Id",
             "required": true,
             "schema": {
               "type": "string"
@@ -580,6 +483,100 @@
         ],
         "responses": {
           "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Add a user to the target group.",
+        "operationId": "WebSocketConnectionApi_PUT_AddUserToGroup",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ttl",
+            "in": "query",
+            "description": "Specifies the seconds that the user exists in the group. If not set, the user lives in the group forever.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Remove a user from the target group.",
+        "operationId": "WebSocketConnectionApi_DELETE_RemoveUserFromGroup",
+        "parameters": [
+          {
+            "name": "hub",
+            "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
             "description": "Success"
           }
         }
@@ -590,11 +587,13 @@
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Remove the user from all groups",
+        "summary": "Remove a user from all groups.",
+        "operationId": "WebSocketConnectionApi_DELETE_RemoveUserFromAllGroups",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
             "required": true,
             "schema": {
               "type": "string"
@@ -603,6 +602,7 @@
           {
             "name": "user",
             "in": "path",
+            "description": "Target user Id",
             "required": true,
             "schema": {
               "type": "string"
@@ -611,49 +611,28 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "The user is deleted"
+          },
+          "202": {
+            "description": "The delete request is accepted and service is handling the request int the background"
           }
         }
       }
     }
   },
   "components": {
-    "schemas": {
-      "IActionResult": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "IActionResultValueTask": {
-        "type": "object",
-        "properties": {
-          "IsCompleted": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsCompletedSuccessfully": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsFaulted": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "IsCanceled": {
-            "type": "boolean",
-            "readOnly": true
-          },
-          "Result": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/IActionResult"
-              }
-            ],
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+        "name": "Authorization",
+        "in": "header"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
