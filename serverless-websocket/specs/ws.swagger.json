@@ -62,6 +62,11 @@
                 "type": "string",
                 "format": "binary"
               }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
             }
           },
           "required": true
@@ -107,6 +112,11 @@
                 "type": "string",
                 "format": "binary"
               }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
             }
           },
           "required": true
@@ -151,6 +161,11 @@
               "schema": {
                 "type": "string",
                 "format": "binary"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
               }
             }
           },
@@ -299,6 +314,11 @@
               "schema": {
                 "type": "string",
                 "format": "binary"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
               }
             }
           },
