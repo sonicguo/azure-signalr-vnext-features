@@ -6,27 +6,12 @@
   },
   "paths": {
     "/api/v1/health": {
-      "get": {
-        "tags": [
-          "HealthApi"
-        ],
-        "summary": "Get service health status.",
-        "operationId": "HealthApi_GET_Index",
-        "responses": {
-          "200": {
-            "description": "The service is healthy"
-          },
-          "503": {
-            "description": "The service is temporarily unavailable"
-          }
-        }
-      },
       "head": {
         "tags": [
           "HealthApi"
         ],
         "summary": "Get service health status.",
-        "operationId": "HealthApi_HEAD_Index",
+        "operationId": "HealthApi_Head_Index",
         "responses": {
           "200": {
             "description": "The service is healthy"
@@ -43,7 +28,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Broadcast content inside request body to all the connected connection in the same hub.",
-        "operationId": "WebSocketConnectionApi_POST_Broadcast",
+        "operationId": "WebSocketConnectionApi_Post_Broadcast",
         "parameters": [
           {
             "name": "hub",
@@ -74,6 +59,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -84,7 +79,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Send content inside request body to the specific user.",
-        "operationId": "WebSocketConnectionApi_POST_SendToUser",
+        "operationId": "WebSocketConnectionApi_Post_SendToUser",
         "parameters": [
           {
             "name": "hub",
@@ -124,6 +119,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -134,7 +139,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Send content inside request body to the specific connection.",
-        "operationId": "WebSocketConnectionApi_POST_SendToConnection",
+        "operationId": "WebSocketConnectionApi_Post_SendToConnection",
         "parameters": [
           {
             "name": "hub",
@@ -174,6 +179,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -182,7 +197,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Check if the connection with the given connectionId exists",
-        "operationId": "WebSocketConnectionApi_GET_CheckConnectionExistence",
+        "operationId": "WebSocketConnectionApi_Get_CheckConnectionExistence",
         "parameters": [
           {
             "name": "hub",
@@ -207,6 +222,16 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -215,7 +240,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Check if the connection with the given connectionId exists",
-        "operationId": "WebSocketConnectionApi_HEAD_CheckConnectionExistence",
+        "operationId": "WebSocketConnectionApi_Head_CheckConnectionExistence",
         "parameters": [
           {
             "name": "hub",
@@ -240,6 +265,16 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -248,7 +283,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Close the client connection",
-        "operationId": "WebSocketConnectionApi_DELETE_CloseClientConnection",
+        "operationId": "WebSocketConnectionApi_Delete_CloseClientConnection",
         "parameters": [
           {
             "name": "hub",
@@ -277,6 +312,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -287,7 +332,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Send content inside request body to a group of connections.",
-        "operationId": "WebSocketConnectionApi_POST_GroupBroadcast",
+        "operationId": "WebSocketConnectionApi_Post_GroupBroadcast",
         "parameters": [
           {
             "name": "hub",
@@ -327,6 +372,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -337,7 +392,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Add a connection to the target group.",
-        "operationId": "WebSocketConnectionApi_PUT_AddConnectionToGroup",
+        "operationId": "WebSocketConnectionApi_Put_AddConnectionToGroup",
         "parameters": [
           {
             "name": "hub",
@@ -373,6 +428,16 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -381,7 +446,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Remove a connection from the target group.",
-        "operationId": "WebSocketConnectionApi_DELETE_RemoveConnectionFromGroup",
+        "operationId": "WebSocketConnectionApi_Delete_RemoveConnectionFromGroup",
         "parameters": [
           {
             "name": "hub",
@@ -417,6 +482,16 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -427,7 +502,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Check whether a user exists in the target group.",
-        "operationId": "WebSocketConnectionApi_GET_CheckUserExistenceInGroup",
+        "operationId": "WebSocketConnectionApi_Get_CheckUserExistenceInGroup",
         "parameters": [
           {
             "name": "hub",
@@ -463,6 +538,16 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -471,7 +556,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Check whether a user exists in the target group.",
-        "operationId": "WebSocketConnectionApi_HEAD_CheckUserExistenceInGroup",
+        "operationId": "WebSocketConnectionApi_Head_CheckUserExistenceInGroup",
         "parameters": [
           {
             "name": "hub",
@@ -507,6 +592,16 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -515,7 +610,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Add a user to the target group.",
-        "operationId": "WebSocketConnectionApi_PUT_AddUserToGroup",
+        "operationId": "WebSocketConnectionApi_Put_AddUserToGroup",
         "parameters": [
           {
             "name": "hub",
@@ -557,6 +652,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -565,7 +670,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Remove a user from the target group.",
-        "operationId": "WebSocketConnectionApi_DELETE_RemoveUserFromGroup",
+        "operationId": "WebSocketConnectionApi_Delete_RemoveUserFromGroup",
         "parameters": [
           {
             "name": "hub",
@@ -598,6 +703,16 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -608,7 +723,7 @@
           "WebSocketConnectionApi"
         ],
         "summary": "Remove a user from all groups.",
-        "operationId": "WebSocketConnectionApi_DELETE_RemoveUserFromAllGroups",
+        "operationId": "WebSocketConnectionApi_Delete_RemoveUserFromAllGroups",
         "parameters": [
           {
             "name": "hub",
@@ -635,6 +750,16 @@
           },
           "202": {
             "description": "The delete request is accepted and service is handling the request int the background"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
