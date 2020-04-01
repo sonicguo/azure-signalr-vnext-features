@@ -22,18 +22,109 @@
         }
       }
     },
+    "/ws/api/v1": {
+      "post": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Broadcast content inside request body to all the connected to endpoint \"/ws/client\"",
+        "operationId": "WebSocketConnectionApi_Post_Broadcast",
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ws/api/v1/hubs/{hub}": {
       "post": {
         "tags": [
           "WebSocketConnectionApi"
         ],
-        "summary": "Broadcast content inside request body to all the connected connection in the same hub.",
+        "summary": "Broadcast content inside request body to all the connected connections in the same hub.",
         "operationId": "WebSocketConnectionApi_Post_Broadcast",
         "parameters": [
           {
             "name": "hub",
             "in": "path",
             "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ws/api/v1/users/{id}": {
+      "post": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Send content inside request body to the specific user.",
+        "operationId": "WebSocketConnectionApi_Post_SendToUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user Id.",
             "required": true,
             "schema": {
               "type": "string"
@@ -116,6 +207,166 @@
           },
           "required": true
         },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ws/api/v1/connections/{connectionId}": {
+      "post": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Send content inside request body to the specific connection.",
+        "operationId": "WebSocketConnectionApi_Post_SendToConnection",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "The connection Id.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Check if the connection with the given connectionId exists",
+        "operationId": "WebSocketConnectionApi_Get_CheckConnectionExistence",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Check if the connection with the given connectionId exists",
+        "operationId": "WebSocketConnectionApi_Head_CheckConnectionExistence",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Close the client connection",
+        "operationId": "WebSocketConnectionApi_Delete_CloseClientConnection",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "202": {
             "description": "Success"
@@ -326,6 +577,57 @@
         }
       }
     },
+    "/ws/api/v1/groups/{group}": {
+      "post": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Send content inside request body to a group of connections.",
+        "operationId": "WebSocketConnectionApi_Post_GroupBroadcast",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ws/api/v1/hubs/{hub}/groups/{group}": {
       "post": {
         "tags": [
@@ -372,6 +674,321 @@
         "responses": {
           "202": {
             "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ws/api/v1/groups/{group}/connections/{connectionId}": {
+      "put": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Add a connection to the target group.",
+        "operationId": "WebSocketConnectionApi_Put_AddConnectionToGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "Target connection Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Remove a connection from the target group.",
+        "operationId": "WebSocketConnectionApi_Delete_RemoveConnectionFromGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "Target connection Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ws/api/v1/groups/{group}/users/{user}": {
+      "get": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebSocketConnectionApi_Get_CheckUserExistenceInGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebSocketConnectionApi_Head_CheckUserExistenceInGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Add a user to the target group.",
+        "operationId": "WebSocketConnectionApi_Put_AddUserToGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ttl",
+            "in": "query",
+            "description": "Specifies the seconds that the user exists in the group. If not set, the user lives in the group forever.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Remove a user from the target group.",
+        "operationId": "WebSocketConnectionApi_Delete_RemoveUserFromGroup",
+        "parameters": [
+          {
+            "name": "group",
+            "in": "path",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ws/api/v1/users/{user}/groups": {
+      "delete": {
+        "tags": [
+          "WebSocketConnectionApi"
+        ],
+        "summary": "Remove a user from all groups.",
+        "operationId": "WebSocketConnectionApi_Delete_RemoveUserFromAllGroups",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "path",
+            "description": "Target user Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user is deleted"
+          },
+          "202": {
+            "description": "The delete request is accepted and service is handling the request int the background"
           },
           "400": {
             "description": "Bad Request",
