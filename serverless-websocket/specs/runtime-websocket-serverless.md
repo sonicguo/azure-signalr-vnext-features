@@ -7,7 +7,7 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 - Talk to an upstream application using HTTP protocol
 - Handle connection connect/disconnect events
 - Handle the WebSocket handshake, with the ability to configure the SubProtocol and reject connections
-- Handle WebSocket messages
+- Handle WebSocket messages, supporting both text and binary format within one connection
 
 ## Non-Goals
 - The upstream using persistent connection is out of scope.
@@ -26,6 +26,7 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 
 1. The portal will support configuring WebSocket mode, from CLI and Azure portal. With WebSocket mode, only `/ws` requests are allowed.
 2. The portal will support configuring Upstream settings from CLI and Azure portal.
+3. The portal will support configuring the Auth settings talking to Upstream.
 
 ## Authentication
 
@@ -44,11 +45,11 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 
 ## Client endpoint
 
-Both hub and format support set from url or query, below patterns are valid.
+Hub is optional, when hub is not set, a default hub `_default` is used. Below patterns are valid.
 
-- `wss://{serviceUrl}/ws/client/hubs/{hub}/formats/{text/binary}`
-- `wss://{serviceUrl}/ws/client/hubs/{hub}?formats={text/binary}`
-- `wss://{serviceUrl}/ws/client?hubs={hub}&format={text/binary}`
+- `wss://{serviceUrl}/ws/client`
+- `wss://{serviceUrl}/ws/client/hubs/{hub}`
+- `wss://{serviceUrl}/ws/client?hubs={hub}`
 
 ## Upstream
 
@@ -94,17 +95,17 @@ Each is a defined **event** and belongs to a **category**. When event are trigge
 
 The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the [REST API](./ws.swagger.json) to send messages to clients.
 
-| Actions | REST API |
-|----|----|
-| Broadcast message | `POST /ws/api/v1/hubs/{hub}` |
-| Send message to user | `POST /ws/api/v1/hubs/{hub}/users/{id}`|
-| Send message to connection |`POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
-| Add connection to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
-| Remove connection from group|`DELETE /ws/api/hubs/{hub}/v1/groups/{group}/connections/{connectionId}`|
-| Add user to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Remove user from group|`DELETE /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Send message to group| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
-| Close connection| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`
+| Actions | REST API With Default Hub | REST API With Specific Hub|
+|----|----|----|
+| Broadcast message | `POST /ws/api/v1` | `POST /ws/api/v1/hubs/{hub}` |
+| Send message to user | `POST /ws/api/v1//users/{id}`| `POST /ws/api/v1/hubs/{hub}/users/{id}`|
+| Send message to connection | `POST /ws/api/v1/connections/{connectionId}`| `POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
+| Add connection to group | `PUT /ws/api/v1/groups/{group}/connections/{connectionId}`| `PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Remove connection from group| `DELETE /ws/api/v1/groups/{group}/connections/{connectionId}`| `DELETE /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Add user to group | `PUT /ws/api/v1/groups/{group}/users/{user}`| `PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
+| Remove user from group| `DELETE /ws/api/v1/groups/{group}/users/{user}`| `DELETE /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
+| Send message to group| `POST /ws/api/v1/groups/{group}`| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
+| Close connection| `DELETE /ws/api/v1/connections/{connectionId}?reason={reason}`| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`|
             
 ## Protocol Details
 
