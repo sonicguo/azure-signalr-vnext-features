@@ -121,7 +121,7 @@ module.exports = function (_from, _connId, _context) {
             _context.log(log + ", url:" + url + ", token:" + token);
             const response = await axios.post(url, content, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "text/plain",
                     "Authorization": token
                 }
             });
@@ -140,7 +140,7 @@ module.exports = function (_from, _connId, _context) {
             _context.log(log + ", url:" + url + ", token:" + token);
             const response = await axios.post(url, content, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "text/plain",
                     "Authorization": token
                 }
             });
@@ -159,7 +159,7 @@ module.exports = function (_from, _connId, _context) {
             _context.log(log + ", url:" + url + ", token:" + token);
             const response = await axios.post(url, content, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "text/plain",
                     "Authorization": token
                 }
             });
@@ -178,7 +178,7 @@ module.exports = function (_from, _connId, _context) {
             _context.log(log + ", url:" + url + ", token:" + token);
             const response = await axios.post(url, content, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "text/plain",
                     "Authorization": token
                 }
             });
