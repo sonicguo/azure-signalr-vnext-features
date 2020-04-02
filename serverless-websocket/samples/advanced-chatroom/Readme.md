@@ -62,11 +62,7 @@ There are two Functions inside this repo:
 3. [The Function handling WebSocket requests](./messages)
 
 ## The Function hosting the Chat's static webpage
-The Chat's webpage is quite simple, a static webpage is enough. It is based on pure html and the [Vue.js](https://cn.vuejs.org/index.html) JavaScript framework. What the function does in [index.js](./home/index.js) is simply return the content of [index.html](./home/index.html), providing the Azure SignalR Serverless WebSocket endpoint value `{AzureSignalREndpoint}/ws/client/hubs/chat`. The following patterns are all valid while `{hub}` is required and `{format}` is optional with `text` as default value.
-
-1. `/ws/client?hub={hub}&format={text|binary}`
-2. `/ws/client/hubs/{hub}?format={text|binary}`
-3. `/ws/client/hubs/{hub}/formats/{text|binary}`
+The Chat's webpage is quite simple, a static webpage is enough. It is based on pure html and the [Vue.js](https://cn.vuejs.org/index.html) JavaScript framework. What the function does in [index.js](./home/index.js) is simply return the content of [index.html](./home/index.html), providing the Azure SignalR Serverless WebSocket endpoint value `{AzureSignalREndpoint}/ws/client/hubs/chat`.
 
 To make the demo workflow simple, current auth info is read from request's query `name`. AAD is also supported if AAD is configured for the Function App.
 
@@ -100,18 +96,18 @@ If the `connect` event returns success code, Azure SignalR Service will establis
 Note that the Function can set the `user` identity of the connection by setting `X-ASRS-User-Id` response header when `connect`, as [./messages/events/connect.js](./messages/events/connect.js) shows.
 
 ### Ask Azure SignalR to do things for you
-Azure SignalR provides REST APIs to be used to manipulate connected WebSocket connections, the following actions are possible:
+Azure SignalR provides [REST APIs](../../specs/ws.swagger.json) to be used to manipulate connected WebSocket connections, the following actions are possible:
 
-| Actions | REST API |
-|----|----|
-| Broadcast message | `POST /ws/api/v1/hubs/{hub}` |
-| Send message to user | `POST /ws/api/v1/hubs/{hub}/users/{id}`|
-| Send message to connection |`POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
-| Add connection to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
-| Remove connection from group|`Delete /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
-| Add user to group |`PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Remove user from group|`Delete /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Send message to group| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
-| Close connection| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`
+| Actions | REST API With Default Hub | REST API With specific Hub|
+|----|----|--|
+| Broadcast message | `POST /ws/api/v1` | `POST /ws/api/v1/hubs/{hub}` |
+| Send message to user | `POST /ws/api/v1/users/{id}`| `POST /ws/api/v1/hubs/{hub}/users/{id}`|
+| Send message to connection |`POST /ws/api/v1/connections/{connectionId}`|`POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
+| Add connection to group |`PUT /ws/api/v1/groups/{group}/connections/{connectionId}`|`PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Remove connection from group|`Delete /ws/api/v1/groups/{group}/connections/{connectionId}`|`Delete /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Add user to group |`PUT /ws/api/v1/groups/{group}/users/{user}`|`PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
+| Remove user from group|`Delete /ws/api/v1/groups/{group}/users/{user}`|`Delete /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
+| Send message to group| `POST /ws/api/v1/groups/{group}`|`POST /ws/api/v1/hubs/{hub}/groups/{group}`|
+| Close connection| `DELETE /ws/api/v1/connections/{connectionId}?reason={reason}` |`DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`|
 
 The Auth of REST API leverages [JWT Token](https://jwt.io), [./messages/api.js](./messages/api.js) demonstrates how to sign the request using `jsonwebtoken` library.

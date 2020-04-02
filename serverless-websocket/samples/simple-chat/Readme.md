@@ -27,20 +27,19 @@ Now local server has a public host name `xxxxx.ngrok.io`. As in the below screen
 4. Set the Upstream pattern for your service
 We have the [Upstream Manage Page](https://ws-manage.azurewebsites.net/api/manage) as a **temp** workaround before the Upstream settings are available in the Azure portal.
 
-Open the [page](https://ws-manage.azurewebsites.net/api/manage) and input your `ConnectionString`, set the upstream for hub `simplechat` to the textarea for **Set Upstream Settings**, remember to replace `xxxxx` with your `ngrok` host. Our sample server listens to path `/simplechat/connect`, `/simplechat/disconnect` and `/simplechat/message`, from which `simplechat` is the value of the `hub`, and `connect`, `disconnect` and `message` are the name of the events. For details about the terms, please refer to the [spec](../../specs/runtime-websocket-serverless.md).
+Open the [page](https://ws-manage.azurewebsites.net/api/manage) and input your `ConnectionString`, set the upstream to the textarea for **Set Upstream Settings**, remember to replace `xxxxx` with your `ngrok` host. Our sample server listens to path `/simplechat/connect`, `/simplechat/disconnect` and `/simplechat/message`, from which `connect`, `disconnect` and `message` are the name of the events. For details about the terms, please refer to the [spec](../../specs/runtime-websocket-serverless.md).
 
 ```json
 {
 	"templates": [
 		{
-			"hubPattern": "simplechat",
-			"urlTemplate": "http://xxxxx.ngrok.io/{hub}/{event}"
+			"urlTemplate": "http://xxxxx.ngrok.io/simplechat/{event}"
 		}
 	]
 }
 ```
 
-For example, the below screenshot sets the upstream templates for both `chat` and `simplechat` hubs.
+For example, the below screenshot sets the upstream templates as `http://f0d3237b.ngrok.io/simplechat/{event}`.
 ![ngrok](./images/sample_set_upstream.png)
 
 5. Visit the chat

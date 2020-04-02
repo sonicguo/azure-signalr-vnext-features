@@ -17,8 +17,6 @@ if (!parsed) {
   return;
 }
 
-const hub = 'simplechat';
-
 // serve default to return index.html
 app.get('/', function (req, res) {
   const name = req.query.name;
@@ -31,7 +29,7 @@ app.get('/', function (req, res) {
     if (err) {
       res.sendStatus(404);
     } else {
-      var rendered = data.replace(/%%%____URL____%%%/g, `${parsed.wshost}ws/client/hubs/${hub}/?user=${name}`)
+      var rendered = data.replace(/%%%____URL____%%%/g, `${parsed.wshost}ws/client/?user=${name}`)
         .replace(/%%%___user___%%%/g, name);
       res.send(rendered);
     }
@@ -39,14 +37,14 @@ app.get('/', function (req, res) {
 });
 
 // serve requests for "simplechat"
-app.post(`/${hub}/connect`, function (req, res) {
+app.post(`/simplechat/connect`, function (req, res) {
   var user = new URLSearchParams(req.header("x-asrs-client-query")).get('user');
   console.log(`connect ${req.header("x-asrs-connection-id")} user ${user} connected.`);
   // set back the user id for the connection
   res.header("x-asrs-user-id", user);
   res.send(`User ${user}(${req.header("x-asrs-connection-id")}) connected.`);
 });
-app.post(`/${hub}/message`, function (req, res) {
+app.post(`/simplechat/message`, function (req, res) {
   console.log(`User ${res.header("x-asrs-user-id")}(${req.header("x-asrs-connection-id")}) sending message.`);
   // broadcast through Azure SignalR
   req.setEncoding('utf8');
@@ -62,7 +60,7 @@ app.post(`/${hub}/message`, function (req, res) {
     }
   });
 });
-app.post(`/${hub}/disconnect`, function (req, res) {
+app.post(`/simplechat/disconnect`, function (req, res) {
   console.log(`User ${res.header("x-asrs-user-id")}(${req.header("x-asrs-connection-id")}) disconnected.`);
 });
 
@@ -73,7 +71,7 @@ var server = app.listen(8088, function () {
 });
 
 function broadcast(content) {
-  var path = "ws/api/v1/hubs/" + hub;
+  var path = "ws/api/v1";
   var url = parsed.host + path;
   var token = getToken(path);
   return axios.post(url, content, {
