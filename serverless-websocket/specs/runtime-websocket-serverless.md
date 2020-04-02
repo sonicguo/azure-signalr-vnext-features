@@ -7,7 +7,7 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
 - Talk to an upstream application using HTTP protocol
 - Handle connection connect/disconnect events
 - Handle the WebSocket handshake, with the ability to configure the SubProtocol and reject connections
-- Handle WebSocket messages, supporting both text and binary format within one connection
+- Handle WebSocket messages, supporting both text and binary messages within one connection
 
 ## Non-Goals
 - The upstream using persistent connection is out of scope.
@@ -44,8 +44,7 @@ Use Azure SignalR Service to handle pure WebSocket requests (without SignalR):
    2. Provide the [Identity](https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=dotnet) to Azure SignalR through portal/cli
 
 ## Client endpoint
-
-Hub is optional, when hub is not set, a default hub `_default` is used. Below patterns are valid.
+For client endpoint, `hub` is an optional parameter and it is useful in isolating functionalities when using one service, for example, you can have both `/ws/client/hubs/notification` and `/ws/client/hubs/chat`. When `hub` is not specified, the service creates a preserved hub `_default` internally. Below patterns are valid:
 
 - `wss://{serviceUrl}/ws/client`
 - `wss://{serviceUrl}/ws/client/hubs/{hub}`

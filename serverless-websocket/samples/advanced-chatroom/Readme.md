@@ -62,11 +62,7 @@ There are two Functions inside this repo:
 3. [The Function handling WebSocket requests](./messages)
 
 ## The Function hosting the Chat's static webpage
-The Chat's webpage is quite simple, a static webpage is enough. It is based on pure html and the [Vue.js](https://cn.vuejs.org/index.html) JavaScript framework. What the function does in [index.js](./home/index.js) is simply return the content of [index.html](./home/index.html), providing the Azure SignalR Serverless WebSocket endpoint value `{AzureSignalREndpoint}/ws/client/hubs/chat`. `hub` is an optional parameter and it is useful in isolating functionalities when using one service, for example, you can have both `/ws/client/hubs/notification` and `/ws/client/hubs/chat`. When `hub` is not specified, the service creates a preserved hub `_default` internally. Below url patterns all work.
-
-1. `/ws/client`
-1. `/ws/client?hub={hub}`
-1. `/ws/client/hubs/{hub}`
+The Chat's webpage is quite simple, a static webpage is enough. It is based on pure html and the [Vue.js](https://cn.vuejs.org/index.html) JavaScript framework. What the function does in [index.js](./home/index.js) is simply return the content of [index.html](./home/index.html), providing the Azure SignalR Serverless WebSocket endpoint value `{AzureSignalREndpoint}/ws/client/hubs/chat`.
 
 To make the demo workflow simple, current auth info is read from request's query `name`. AAD is also supported if AAD is configured for the Function App.
 
