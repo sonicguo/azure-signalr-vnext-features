@@ -92,7 +92,7 @@ We leverage the HTTP protocol to deliver WebSocket messages to Upstream. A singl
 
 Handshake and Connect -> Handle Messages -> Disconnect
         
-Each HTTP request is a defined **event** and belongs to a specific **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and delivers the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
+Each **event** in the above lifecycle belongs to a specific **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and delivers the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
 
 ### Calling the Client from the Upstream
 
