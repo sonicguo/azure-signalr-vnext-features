@@ -88,9 +88,11 @@ Hex_encoded(HMAC_SHA256(accessKey, connection-id))
 
 ### Calling the Upstream from the Client
         
-We leverage HTTP protocol to deliver WebSocket connections to Upstream. A single WebSocket connection's lifecyle is as below: Handshake and Connect -> Handle Messages -> Disconnect
+We leverage the HTTP protocol to deliver WebSocket messages to Upstream. A single WebSocket connection's lifecyle is as below: 
+
+Handshake and Connect -> Handle Messages -> Disconnect
         
-Each is a defined **event** and belongs to a **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and deliver the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
+Each HTTP request is a defined **event** and belongs to a specific **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and delivers the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
 
 ### Calling the Client from the Upstream
 
@@ -142,7 +144,7 @@ The ASRS server tracks clients and has a result can be used to send messages to 
 
 The connect event forwards the subprotocol and authentication information to Upstream from the client. The Azure SignalR Service uses the status code to determine if the request will be upgraded to WebSocket protocol.
 
-If the request contains the `Sec-WebSocket-Protocol` header with one or multiple supported sub-protocols. The server should return one sub-protocol it supports. If the server doesn't want to use any subprotocols, it should **not** send the `Sec-WebSocket-Protocol` header. [Sending a blank header is incorrect](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#Subprotocols).
+If the request contains the `Sec-WebSocket-Protocol` header with one or multiple supported sub-protocols. The server should return one sub-protocol it supports. If the server doesn't want to use any subprotocols, it should **not** send the `Sec-WebSocket-Protocol` header. [Sending a blank header is invalid](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#Subprotocols).
 
 * `X-ASRS-User-Id?`: `{authed user id}`
 
