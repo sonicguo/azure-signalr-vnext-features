@@ -57,11 +57,13 @@ app.post(`/simplechat/message`, function (req, res) {
     if (body){
       console.log("broadcasting " + body);
       await broadcast(body);
+      res.sendStatus(200);
     }
   });
 });
 app.post(`/simplechat/disconnect`, function (req, res) {
   console.log(`User ${res.header("x-asrs-user-id")}(${req.header("x-asrs-connection-id")}) disconnected.`);
+  res.sendStatus(200);
 });
 
 var server = app.listen(8088, function () {
