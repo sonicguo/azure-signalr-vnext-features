@@ -7,7 +7,7 @@ const config = require('./settings.json');
 
 const app = express();
 const conn = config["AzureSignalRConnectionString"];
-if (!conn){
+if (!conn) {
   console.error("Please specify `AzureSignalRConnectionString` with your connection string in settings.json file!");
   return;
 }
@@ -49,14 +49,21 @@ app.post(`/simplechat/message`, function (req, res) {
   // broadcast through Azure SignalR
   req.setEncoding('utf8');
   var body = '';
-  req.on('data', function(chunk) {
+  req.on('data', function (chunk) {
     body += chunk;
   });
-  
-  req.on('end', async function(){
-    if (body){
+
+  req.on('end', async function () {
+    if (body) {
       console.log("broadcasting " + body);
-      await broadcast(body);
+      try {
+        await broadcast(body);
+        res.sendStatus(200);
+      } catch (err) {
+        // report err back to client
+        res.status(500).send(err.message);
+      }
+    } else {
       res.sendStatus(200);
     }
   });
@@ -78,8 +85,8 @@ function broadcast(content) {
   var token = getToken(path);
   return axios.post(url, content, {
     headers: {
-        "Content-Type": "text/plain",
-        "Authorization": token
+      "Content-Type": "text/plain",
+      "Authorization": token
     }
   });
 }
