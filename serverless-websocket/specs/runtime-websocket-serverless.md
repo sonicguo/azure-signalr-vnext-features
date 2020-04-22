@@ -157,6 +157,7 @@ As the service allows anonymous connections, it is the `connect` event's respons
 
 * `X-ASRS-Connection-Group?`: `{group}`
 
+<a name="connect_response_header_group">
 The header provides a convenient way for user to add this connection to one or multiple groups in response header. In this way, there is no need to have an additional call to add this connection to some group.
 
 #### Response Status Codes:
