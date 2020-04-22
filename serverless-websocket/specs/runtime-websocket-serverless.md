@@ -94,21 +94,25 @@ Handshake and Connect -> Handle Messages -> Disconnect
         
 Each **event** in the above lifecycle belongs to a specific **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and delivers the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
 
+<a name="rest_api">
 ### Calling the Client from the Upstream
 
 The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the [REST API](./ws.swagger.json) to send messages to clients.
 
 | Actions | REST API With Default Hub | REST API With Specific Hub|
 |----|----|----|
-| Broadcast message | `POST /ws/api/v1` | `POST /ws/api/v1/hubs/{hub}` |
+| Broadcast message | `POST /ws/api/v1?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}` | `POST /ws/api/v1/hubs/{hub}?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}` |
 | Send message to user | `POST /ws/api/v1//users/{id}`| `POST /ws/api/v1/hubs/{hub}/users/{id}`|
 | Send message to connection | `POST /ws/api/v1/connections/{connectionId}`| `POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
 | Add connection to group | `PUT /ws/api/v1/groups/{group}/connections/{connectionId}`| `PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
 | Remove connection from group| `DELETE /ws/api/v1/groups/{group}/connections/{connectionId}`| `DELETE /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
 | Add user to group | `PUT /ws/api/v1/groups/{group}/users/{user}`| `PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
 | Remove user from group| `DELETE /ws/api/v1/groups/{group}/users/{user}`| `DELETE /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Send message to group| `POST /ws/api/v1/groups/{group}`| `POST /ws/api/v1/hubs/{hub}/groups/{group}`|
+| Send message to group| `POST /ws/api/v1/groups/{group}?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}`| `POST /ws/api/v1/hubs/{hub}/groups/{group}?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}`|
 | Close connection| `DELETE /ws/api/v1/connections/{connectionId}?reason={reason}`| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`|
+| Check if connection exists| `HEAD /ws/api/v1/connections/{connectionId}` | `HEAD /ws/api/v1/hubs/{hub}/connections/{connectionId}` |
+| Check if user exists (has connections)| `HEAD /ws/api/v1/users/{user}` | `HEAD /ws/api/v1/hubs/{hub}/users/{user}` |
+| Check if group exists (has connections)| `HEAD /ws/api/v1/groups/{group}` | `HEAD /ws/api/v1/hubs/{hub}/groups/{group}` |
             
 ## Protocol Details
 
