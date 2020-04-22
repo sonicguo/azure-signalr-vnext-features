@@ -142,13 +142,17 @@ The ASRS server tracks clients and has a result can be used to send messages to 
 
 * `Sec-WebSocket-Protocol?`: `{subprotocol}`
 
-The connect event forwards the subprotocol and authentication information to Upstream from the client. The Azure SignalR Service uses the status code to determine if the request will be upgraded to WebSocket protocol.
+The `connect` event forwards the subprotocol and authentication information to Upstream from the client. The Azure SignalR Service uses the status code to determine if the request will be upgraded to WebSocket protocol.
 
 If the request contains the `Sec-WebSocket-Protocol` header with one or multiple supported sub-protocols. The server should return one sub-protocol it supports. If the server doesn't want to use any subprotocols, it should **not** send the `Sec-WebSocket-Protocol` header. [Sending a blank header is invalid](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#Subprotocols).
 
 * `X-ASRS-User-Id?`: `{authed user id}`
 
 As the service allows anonymous connections, it is the `connect` event's responsibility to tell the service the user id of the client connection. The Service will read the user id from the response header `X-ASRS-User-Id` if it exists. The connection will be dropped if user id cannot be read from the request claims nor the `connect` event's response header.
+
+* `X-ASRS-Connection-Group?`: `{group}`
+
+The header provides a convenient way for user to add this connection to one or multiple groups in response header. In this way, there is no need to have an additional call to add this connection to some group.
 
 #### Response Status Codes:
 * `2xx`: Success, the WebSocket connection is going to be established.
