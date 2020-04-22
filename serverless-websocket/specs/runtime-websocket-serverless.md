@@ -95,6 +95,7 @@ Handshake and Connect -> Handle Messages -> Disconnect
 Each **event** in the above lifecycle belongs to a specific **category**. When event are triggered, the service makes an HTTP `POST` request to the Upstream URL, and delivers the HTTP response to the client if the response is non-empty. Details are described in [Protocol](#protocol-details) section.
 
 <a name="rest_api">
+    
 ### Calling the Client from the Upstream
 
 The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the [REST API](./ws.swagger.json) to send messages to clients.
