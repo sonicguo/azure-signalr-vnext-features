@@ -155,9 +155,10 @@ If the request contains the `Sec-WebSocket-Protocol` header with one or multiple
 
 As the service allows anonymous connections, it is the `connect` event's responsibility to tell the service the user id of the client connection. The Service will read the user id from the response header `X-ASRS-User-Id` if it exists. The connection will be dropped if user id cannot be read from the request claims nor the `connect` event's response header.
 
+<a name="connect_response_header_group">
+ 
 * `X-ASRS-Connection-Group?`: `{group}`
 
-<a name="connect_response_header_group">
 The header provides a convenient way for user to add this connection to one or multiple groups in response header. In this way, there is no need to have an additional call to add this connection to some group.
 
 #### Response Status Codes:
