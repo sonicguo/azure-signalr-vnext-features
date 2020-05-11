@@ -1,47 +1,14 @@
 # A Simple Chat on WebSocket
-This is a simple chat demo. The client side uses the `WebSocket` Web API and is connected to Azure SignalR Serverless WebSocket acting as a reverse proxy. There is no need for the server side to be a WebSocket server, the server side, hosted in [node.js](), only need to handle bussiness logic.
+This is a simple chat demo. The client side is pure static [html page](./client/index.html) that it can be hosted even in Azure Blob, and the server can be hosted by either [Node.js and Express](./server-express-version/Readme.md) or [Azure Function](./server-function-version/Readme.md)
 
-## Run the demo locally
-### Prerequisites
-* [Node.js]() to host your server locally
-* [ngrok](https://ngrok.com/) to expose local port to public
+As you can see in the [client page](./client/index.html), the client side uses the browser-natively-supported [WebSocket Web API](https://developer.mozilla.org/zh-CN/docs/Web/API/WebSockets_API) to connect to the service. Every WebSocket frame is delivered to the **Upstream**. The **Upstream** can be **any** host accepting `POST` request from the service, there is no need for the Upstream to handle WebSocket connections, it only handles bussiness logic.
 
-### Steps
-1. Update `AzureSignalRConnectionString` in [settings.json](./settings.json) with your connection string.
-2. Under this folder, run the local server by:
-```
-npm install
-node index.js
-```
-The local server now listens the `8088` port.
+## Try the live demo
 
-3. Expose the local port using [ngrok](https://ngrok.com/)
-Go to the path where `ngrok` exists, type:
-```
-ngrok http 8088
-```
-Now local server has a public host name `xxxxx.ngrok.io`. As in the below screenshot, the public host name is `http://f0d3237b.ngrok.io`.
+Try the [live chat demo Here](https://wssimplechatdemo.z13.web.core.windows.net/). This demo is a static webpage hosted in Azure Blob, and it by default points to our demo endpoint. You can change it to your endpoint to try your own demo with your endpoint succussfully setup with below steps.
 
-![ngrok](./images/sample_ngrok.png)
+![Sample run](./server-function-version/images/sample_run.png)
 
-4. Set the Upstream pattern for your service
-We have the [Upstream Manage Page](https://ws-manage.azurewebsites.net/api/manage) as a **temp** workaround before the Upstream settings are available in the Azure portal.
-
-Open the [page](https://ws-manage.azurewebsites.net/api/manage) and input your `ConnectionString`, set the upstream to the textarea for **Set Upstream Settings**, remember to replace `xxxxx` with your `ngrok` host. Our sample server listens to path `/simplechat/connect`, `/simplechat/disconnect` and `/simplechat/message`, from which `connect`, `disconnect` and `message` are the name of the events. For details about the terms, please refer to the [spec](../../specs/runtime-websocket-serverless.md).
-
-```json
-{
-	"templates": [
-		{
-			"urlTemplate": "http://xxxxx.ngrok.io/simplechat/{event}"
-		}
-	]
-}
-```
-
-For example, the below screenshot sets the upstream templates as `http://f0d3237b.ngrok.io/simplechat/{event}`.
-![ngrok](./images/sample_set_upstream.png)
-
-5. Visit the chat
-Now it is all set, visit the client page `http://localhost:8088?name={user_name}` with your `{user_name}` to try the Chat.
-![chat](./images/sample_run.png)
+## Setup your demo within 4 steps
+* [Node.js and Express version](./server-express-version/Readme.md)
+* [Azure Function version](./server-function-version/Readme.md)

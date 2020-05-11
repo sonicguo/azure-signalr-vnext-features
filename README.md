@@ -13,8 +13,8 @@ This repo contains the specs and samples for the vnext features of Azure SignalR
     Check the [specs here](./serverless-websocket/specs/runtime-websocket-serverless.md).
 
     Demos:
-    * [A simple demo](./serverless-websocket/samples/simple-chat) with Azure Function and Azure SignalR Serverless WebSocket
-    * [An advanced chatroom](./serverless-websocket/samples/advanced-chatroom) with Azure Function and Azure SignalR Serverless WebSocket and Storage
+    * [🔥 [Live Demo](https://wssimplechatdemo.z13.web.core.windows.net)🔥 ][4 steps creating a chat](./serverless-websocket/samples/simple-chat/Readme.md) in either Azure Function way or Express way.
+    * [🔥 [Live Demo](https://serverless-ws-chat.azurewebsites.net/api/home?code=msSB2Zn5P1VSRITEjQpFotgAuPLWDnvqvT0zcV/hP3uEgBUnMrygfQ==&name=testuser1)🔥 ][A fully-functional server-less chatroom with group, user and history](./serverless-websocket/samples/advanced-chatroom/Readme.md) with Azure Function and Azure Storage.
 
 # Contributing
 

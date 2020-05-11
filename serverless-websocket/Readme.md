@@ -8,7 +8,6 @@ Azure SignalR is able to accept direct WebSocket connection and forward every me
 Check the [specs here](./specs/runtime-websocket-serverless.md).
 
 ## Demos
-* [A simple demo](./samples/simple-chat) with Azure Function and Azure SignalR Serverless WebSocket
-* [An advanced chatroom](./samples/advanced-chatroom) with Azure Function and Azure SignalR Serverless WebSocket and Storage
+* [🔥 [Live Demo](https://wssimplechatdemo.z13.web.core.windows.net)🔥 ] [4 steps creating a chat](./samples/simple-chat/Readme.md) in either Azure Function way or Express way.
+* [🔥 [Live Demo](https://serverless-ws-chat.azurewebsites.net/api/home?code=msSB2Zn5P1VSRITEjQpFotgAuPLWDnvqvT0zcV/hP3uEgBUnMrygfQ==&name=testuser1)🔥 ] [A fully-functional server-less chatroom with group, user and history](./samples/advanced-chatroom/Readme.md) with Azure Function and Azure Storage.
 
-## Workflow

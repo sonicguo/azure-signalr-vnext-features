@@ -1,0 +1,28 @@
+{
+  "name": "simple-chat",
+  "version": "1.0.0",
+  "description": "A simple chat demo for using WebSockets feature of the SignalR Service",
+  "main": "main.js",
+  "dependencies": {
+    "azure-websockets": "git+https://github.com/vicancy/azure-websockets.git",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure/azure-signalr-vnext-features.git"
+  },
+  "keywords": [
+    "Demo"
+  ],
+  "author": "lianwei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Azure/azure-signalr-vnext-features/issues"
+  },
+  "homepage": "https://github.com/Azure/azure-signalr-vnext-features#readme"
+}
