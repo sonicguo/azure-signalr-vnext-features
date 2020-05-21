@@ -1,6 +1,8 @@
 # Introduction
 This repo contains the specs and samples for the vnext features of Azure SignalR Service.
 
+Please contact us if you are interested in trying this vnext feature!
+
 ## VNEXT Features
 
 * [Serverless WebSocket](./serverless-websocket)
