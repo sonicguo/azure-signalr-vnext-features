@@ -1,5 +1,5 @@
 {
-  "name": "asrsmessages",
+  "name": "message",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,9 +9,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.0",
     "azure-storage": "^2.10.3",
-    "jsonwebtoken": "^8.5.1",
-    "url-search-params": "^1.1.0"
+    "azure-storage-table": "git+https://github.com/vicancy/azure-storage-table.git",
+    "azure-websockets": "git+https://github.com/vicancy/azure-websockets.git"
   }
 }

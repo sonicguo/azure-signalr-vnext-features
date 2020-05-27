@@ -40,7 +40,7 @@ Now it is time to config the Upstream URL pattern inside the Service.
 
 With this Private Preview version, we provide an [Upstream Manage Page](https://ws-manage.azurewebsites.net/api/manage) for you to set and get the Upstream settings of the Service. Please note that this is a **temp** workaround before the Upstream settings are available in the Azure portal.
 
-Put following into the **Set Upstream** text area to set the Upstream settings for the service, remember to replace `(id)` with your `ngrok` host
+Put the following into the **Set Upstream** text area to set the Upstream settings for the service, remember to replace `(id)` with your `ngrok` host:
 
 ```json
 {

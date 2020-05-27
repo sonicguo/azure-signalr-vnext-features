@@ -1,0 +1,562 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="A Chat demo for Raw WebSocket feature of Azure SignalR Service">
+  <meta name="author" content="lianwei">
+
+  <title>Serverless WebSocket Chat</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjUiIGhlaWdodD0iNDYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxwYXRoIGQ9Ik0yMzcgMjA3IDMwMiAyMDcgMzAyIDI1MyAyMzcgMjUzWiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz48L2NsaXBQYXRoPjxsaW5lYXJHcmFkaWVudCB4MT0iMjY5IiB5MT0iMjUyIiB4Mj0iMjY5IiB5Mj0iMjA3IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgc3ByZWFkTWV0aG9kPSJyZWZsZWN0IiBpZD0iZmlsbDEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzYyMUE2MCIvPjxzdG9wIG9mZnNldD0iMC40OCIgc3RvcC1jb2xvcj0iIzlBMjk5NyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0Q2NjVEMyIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IHgxPSIyNjkiIHkxPSIyNTIiIHgyPSIyNjkiIHkyPSIyMDciIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBzcHJlYWRNZXRob2Q9InJlZmxlY3QiIGlkPSJmaWxsMiI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNjIxQTYwIi8+PHN0b3Agb2Zmc2V0PSIwLjQ4IiBzdG9wLWNvbG9yPSIjOUEyOTk3Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRDY2NUQzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwKSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTIzNyAtMjA3KSI+PHBhdGggZD0iTTI2NC4yIDIxMi42IDI3NyAyMTIuNiAyNzcgMjEwLjJDMjc3IDIwOC40NCAyNzUuNTYgMjA3IDI3My44IDIwN0wyNDAuMiAyMDdDMjM4LjQ0IDIwNyAyMzcgMjA4LjQ0IDIzNyAyMTAuMkwyMzcgMjMxLjhDMjM3IDIzMy41NiAyMzguNDQgMjM1IDI0MC4yIDIzNUwyNDUgMjM1IDI0NSAyNDMgMjUzIDIzNSAyNTcuOCAyMzUgMjU3LjggMjE5QzI1Ny44IDIxNS40OCAyNjAuNjggMjEyLjYgMjY0LjIgMjEyLjZaIiBmaWxsPSJ1cmwoI2ZpbGwxKSIgZmlsbC1ydWxlPSJldmVub2RkIi8+PHBhdGggZD0iTTI5Ny44IDIxNiAyNjQuMiAyMTZDMjYyLjQ0IDIxNiAyNjEgMjE3LjQ0IDI2MSAyMTkuMkwyNjEgMjQwLjhDMjYxIDI0Mi41NiAyNjIuNDQgMjQ0IDI2NC4yIDI0NEwyODUgMjQ0IDI5MyAyNTIgMjkzIDI0NCAyOTcuOCAyNDRDMjk5LjU2IDI0NCAzMDEgMjQyLjU2IDMwMSAyNDAuOEwzMDEgMjE5LjJDMzAxIDIxNy40NCAyOTkuNTYgMjE2IDI5Ny44IDIxNloiIGZpbGw9InVybCgjZmlsbDIpIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L2c+PC9zdmc+">
+
+  <script src="https://kit.fontawesome.com/fd3eea831a.js" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+
+  <!-- Custom styles for this template -->
+  <style>
+    html,
+    body,
+    main {
+      height: 100%
+    }
+
+    body {
+      font-size: .875rem;
+    }
+
+    /*
+ * Sidebar
+ */
+    .sidebar {
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+
+    .sidebar-sticky {
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+    }
+
+    .sidebar .nav-link {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .sidebar .nav-link .fas,
+    .sidebar .nav-link .far {
+      margin-right: 4px;
+      color: #999;
+    }
+
+    .sidebar .nav-link.active {
+      color: #007bff;
+    }
+
+    .sidebar .nav-link:hover .fas,
+    .sidebar .nav-link:hover .far,
+    .sidebar .nav-link.active .fas,
+    .sidebar .nav-link.active .far {
+      color: inherit;
+    }
+
+    .sidebar-heading {
+      font-size: .75rem;
+      text-transform: uppercase;
+    }
+
+    .online {
+      color: #0f0
+    }
+
+    li.active {
+      background: #fff;
+      border-top: 1px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    #chat {
+      overflow: auto;
+    }
+
+    /* Login */
+    .login {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      min-height: 100%;
+      padding: 20px;
+    }
+
+    /*
+ * Navbar
+ */
+
+    .navbar-brand {
+      padding-top: .75rem;
+      padding-bottom: .75rem;
+      font-size: 1rem;
+      background-color: rgba(0, 0, 0, .25);
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+    }
+
+    .navbar .form-control {
+      padding: .75rem 1rem;
+      border-width: 0;
+      border-radius: 0;
+    }
+
+    .form-control-dark {
+      color: #fff;
+      background-color: rgba(255, 255, 255, .1);
+      border-color: rgba(255, 255, 255, .1);
+    }
+
+    .form-control-dark:focus {
+      border-color: transparent;
+      box-shadow: 0 0 0 3px rgba(255, 25zd5, 255, .25);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="container-fluid h-100 d-flex flex-column flex-nowrap p-0">
+    <div v-if="!loggedin" class="login">
+      <form v-on:submit.prevent="login()" class="bg-light p-3" style="width: 70%;">
+        <h5>Welcome to the Chatroom</h5>
+        <div class="form-group">
+          <label for="usernameInput">User</label>
+          <input type="text" class="form-control" v-model="username" id="usernameInput" aria-describedby="usernameHelp"
+            placeholder="Type your user name">
+          <small id="usernameHelp" class="form-text text-muted">The user name used to talk to others</small>
+        </div>
+        <div class="form-group">
+          <label>Endpoint</label>
+          <label v-if="endpoint != null">{{endpoint}}</label>
+          <label v-else class="form-text text-muted">{{endpointLoadStatus}}</label>
+        </div>
+        <button type="submit" :disabled=submitdisabled class="btn btn-primary">Continue</button>
+      </form>
+    </div>
+    <template v-else>
+      <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Serverless WebSocket Chat</a>
+        <span class="ml-auto text-light mr-3">Welcome <strong class="text-info">{{username}}</strong>
+          <template v-if="connected">
+            <i class="fas fa-circle" style="color: #0f0;"></i>
+          </template>
+          <template v-else>
+            <i class="fas fa-circle" style="color:brown;"></i>
+          </template>
+        </span>
+        
+        <!-- <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="#">Sign out</a>
+          </li>
+        </ul> -->
+      </nav>
+      <div class="flex-grow d-flex flex-row flex-nowrap" style="overflow: auto; flex: 1;">
+        <nav class="col-md-2 col bg-light sidebar p-0">
+          <div class="sidebar-sticky">
+
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span><i class="mr-1 fas fa-layer-group" class="mr-1"></i>Public Chat</span>
+            </h4>
+            <ul class="nav flex-column mb-2" v-for="chat in publicChats" v-bind:key="chat.id">
+              <li class="nav-item" v-bind:class="{active: currentChat === chat}">
+                <a class="nav-link" href="#" v-on:click.prevent="setCurrentChat(chat)">
+                  <span class="fas fa-users"></span>
+                  {{chat.name}}<span v-if="chat.unread > 0" class="ml-4 badge badge-danger">{{chat.unread}}</span>
+                </a>
+              </li>
+            </ul>
+
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span><i class="mr-1 fas fa-layer-group"></i>Group Chat</span>
+              <a class="d-flex align-items-center" href="#"> </a>
+              <a href="#" v-on:click.prevent="addingGroup = !addingGroup">
+                <span class="fas fa-plus-circle"></span></a>
+            </h4>
+
+            <form :hidden="!addingGroup" v-on:submit.prevent="addGroupChat(addingGroupName)">
+              <input class="form-control mx-2" type="text" v-model="addingGroupName" placeholder="Type group name">
+            </form>
+
+            <ul class="nav flex-column mb-2" v-for="chat in groupChats" v-bind:key="chat.id">
+              <li class="nav-item" v-bind:class="{active: currentChat === chat}">
+                <a class="nav-link" href="#" v-on:click.prevent="setCurrentChat(chat)">
+                  <span class="fas fa-users"></span>
+                  {{chat.name}}<span v-if="chat.unread > 0" class="ml-4 badge badge-danger">{{chat.unread}}</span>
+                </a>
+              </li>
+            </ul>
+            <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span><i class="mr-1 online far fa-user-circle"></i>Top 20 Users</span>
+            </h4>
+
+            <ul class="nav flex-column" v-for="chat in userChats" v-bind:key="chat.id">
+              <li class="nav-item" v-bind:class="{active: currentChat === chat}">
+                <a class="nav-link" href="#" v-on:click.prevent="setCurrentChat(chat)">
+                  <span class="fas fa-coffee"></span>
+                  {{chat.name}}<span v-if="chat.unread > 0" class="ml-4 badge badge-danger">{{chat.unread}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col d-flex flex-column flex-nowrap p-md-4 p-2">
+          <div>
+            <h1 v-if="currentChat!=null" class="h2">Chat with {{currentChat.name}}</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <button v-if="currentChat!=null && currentChat.type === 'group'" type="button" id="dropdownMenuButton"
+                class="btn btn-sm btn-outline-primary" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Invite
+                <span class="fas fa-plus"></span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <template v-for="user in userChats" v-bind:key="user.id">
+                  <button class="dropdown-item"
+                    v-on:click.prevent="addUserToGroup(currentChat, user.name)">{{user.name}}</button>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <div id="chat" class="" style="flex:1">
+            <template v-if="currentChat!=null">
+              <div v-for="message in currentChat.messages" v-bind:key="message.id">
+                <div class="col-md row" style="display: inline-block;">
+                  <div v-if="message.type ==='system'" class="font-italic text-info text-center font-weight-light"
+                    role="alert">
+                    {{message.text}}
+                  </div>
+                  <div v-if="message.type ==='error'"
+                    class="text-uppercase font-bold text-error text-center font-weight-light" role="alert">
+                    !{{message.code}}!!{{message.text}}
+                  </div>
+                  <div v-if="message.type == 'log'" class="text-muted text-center font-weight-light" role="alert">
+                    {{message.text}}
+                  </div>
+                  <div v-if="message.type == 'alert'" class="font-italic text-warning text-center font-weight-light"
+                    role="alert">
+                    {{message.text}}
+                    <hr />
+                  </div>
+
+                  <div v-if="message.type == 'self' || (!message.type && message.from == username)"
+                    class="alert alert-success float-right" role="text">
+                    {{message.text}}
+                  </div>
+
+                  <div v-if="!message.type && message.from != username" class="float-left" role="text">
+                    <small class="text-muted font-weight-light">{{message.date}}</small><br />
+                    <small class="text-muted font-weight-light">From <a href="#">{{message.from}}</a></small>
+                    <p class="alert alert-primary text-break ">{{message.text}}</p>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div>
+            <br />
+            <form v-on:submit.prevent="sendNewMessage()">
+              <div class="input-group">
+                <input type="text" v-model="newMessage" class="form-control" placeholder="Send a message">
+                <button type="submit" class="btn btn-outline-secondary col-2 col-md-1" :disabled="!newMessage"><i
+                    class="far fa-paper-plane"></i></button>
+              </div>
+            </form>
+          </div>
+
+        </main>
+      </div>
+    </template>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    function generateUser() {
+      return 'User ' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+    }
+
+    const data = {
+      websocket: null,
+      endpoint: null,
+      endpointLoadStatus: "Loading endpoint...",
+      username: generateUser(), // todo: oauth
+      newMessage: '',
+      loggedin: false,
+      connected: false,
+      searchMessage: '',
+      addingGroupName: '',
+      addingGroup: false,
+      currentChat: null,
+      chats: [],
+      counter: 0,
+      logs: [],
+    };
+    const app = new Vue({
+      el: '#app',
+      data: data,
+      computed: {
+        submitdisabled: function () {
+          return !this.username || !this.endpoint;
+        },
+        userChats: function () {
+          return this.chats.filter(i => i.type === 'user' && i.name !== this.username);
+        },
+        groupChats: function () {
+          return this.chats.filter(i => i.type === 'group');
+        },
+        publicChats: function () {
+          return this.chats.filter(i => i.type === 'public');
+        }
+      },
+      methods: {
+        loadEndpoint: async function () {
+          // this.endpoint = 'wss://ws-pp-demo-1.servicedev.signalr.net/ws/client?user=' + encodeURIComponent(this.username);
+          try {
+            var response = await axios.get(`/api/endpoint`)
+            this.endpoint = response.data.endpoint;
+          } catch (err) {
+            this.endpointLoadStatus = err.message;
+          }
+        },
+        login: function () {
+          if (!this.submitdisabled) {
+            this.loggedin = true;
+
+            this.log("Connecting to ...");
+            this.currentChat = this.chats[0];
+
+            try {
+              var websocket = this.websocket = new WebSocket(this.endpoint + `?name=${encodeURIComponent(this.username)}`, ["protocol1", "protocol2"]);
+              websocket.onopen = e => {
+                this.connected = true;
+                this.log("Client websocket opened.");
+              }
+              websocket.onclose = e => {
+                this.connected = false;
+                this.log("Client websocket closed.");
+              }
+              websocket.onerror = e => {
+                this.log("Client websocket error, check the Console window for details.");
+              }
+
+              websocket.onmessage = e => {
+                if (!e.data) return;
+                var message = JSON.parse(e.data);
+                if (Array.isArray(message)) {
+                  message.forEach(element => {
+                    processRecieved(element);
+                  });
+                } else {
+                  processRecieved(message)
+                }
+              }
+            } catch (err) {
+              this.log("Error: " + err);
+            }
+          }
+        },
+        log(content) {
+          this.addItem(new Date().toLocaleString() + ": " + content, this.logs);
+        },
+        setCurrentChat: function (chat) {
+          chat.unread = 0;
+          this.currentChat = chat;
+          if (!chat.historyLoaded) {
+            var user = chat.type === 'user' ? chat.name : null;
+            var group = chat.type === 'group' ? chat.name : null;
+            this.actionToServer('load', user, group);
+            chat.historyLoaded = true;
+          }
+        },
+        sendNewMessage: function () {
+          var chat = this.currentChat;
+          if (!chat || !this.newMessage) {
+            console.error("Empty message");
+          }
+
+          var user = chat.type === 'user' ? chat.name : null;
+          var group = chat.type === 'group' ? chat.name : null;
+          this.sendToServer(this.newMessage, user, group);
+
+          if (user) {
+            // replay the message
+            this.currentChat.messages.push({ type: 'self', text: this.newMessage, date: new Date().toISOString() }); //replay the message 
+          }
+
+          this.newMessage = '';
+        },
+        addChat: function (chatType, chatName) {
+          if (chatName && ['public', 'group', 'user'].includes(chatType)) {
+            var chat = { type: chatType, name: chatName, messages: [], unread: 0, historyLoaded: false };
+            this.addItem(chat, data.chats);
+            return chat;
+          } else {
+            console.error("Invalid input: chat type: " + chatType + " chat name: " + chatName);
+            return null;
+          }
+        },
+        addGroupChat: function (group) {
+          if (this.groupChats.filter(s=>s.name == group).length > 0){
+            console.log("already contain group " + group);
+            return;
+          }
+          
+          var chat = this.addChat('group', group);
+          if (chat) {
+            this.currentChat = chat;
+            this.addingGroupName = '';
+            this.addingGroup = false;
+            this.actionToServer('add', null, group);
+          }
+        },
+        addUserToGroup: function (chat, user) {
+          this.addItem({ type: 'system', text: 'Client: adding ' + user + ' to ' + chat.name }, chat.messages);
+
+          this.actionToServer('add', user, chat.name);
+        },
+        getChat: function (chatType, chatName) {
+          if (['public', 'group', 'user'].includes(chatType)) {
+            var chat = this.chats.filter(i => i.type === chatType).find(s => s.name === chatName);
+            return chat;
+          }
+
+          return null;
+        },
+        removeChat: function (chatType, chatName) {
+          const index = this.chats.find(i => i.type === chatType && i.name === chatName);
+          if (index > -1) {
+            this.$delete(this.chats, index);
+          }
+        },
+        getOrAddChat: function (chatType, chatName) {
+          if (['public', 'group', 'user'].includes(chatType)) {
+            var chat = this.chats.filter(i => i.type === chatType).find(s => s.name === chatName);
+            if (chat) {
+              // update
+              return chat;
+            } else {
+              // add
+              return this.addChat(chatType, chatName);
+            }
+          } else {
+            console.error("Unknown chat type: " + chatType);
+          }
+        },
+        addItem(item, owner) {
+          item.id = this.counter++; // vue transitions need an id
+          owner.push(item);
+        },
+        actionToServer(action = 'send', user = null, group = null) {
+          // a simple chat protocol 
+          // when group is set: load, add, remove, send(text)
+          // when recipient is set: load, send(text), add(to group), remove(from group)
+          // when broadcast: load, send(text)
+          this.websocket.send(JSON.stringify(
+            {
+              action: action,
+              recipient: user,
+              group: group,
+            }
+          ));
+        },
+        sendToServer(content, user = null, group = null) {
+          this.websocket.send(JSON.stringify(
+            {
+              action: 'send',
+              recipient: user,
+              group: group,
+              text: content,
+            }
+          ));
+        },
+        addMessageToView(message) {
+          var chat = this.getOrAddChat(message.chatType || 'public', message.chatName || 'System');
+          if (chat !== this.currentChat) {
+            // add unread mark
+            if (!message.type) {
+              // no type specified, this is a real message
+              chat.unread++;
+            }
+          } else {
+            chat.unread = 0;
+          }
+          this.addItem(message, chat.messages);
+
+          // todo: not that work because the dom is rendered later, use binding?
+          var elem = document.getElementById('chat');
+          if (elem) {
+            elem.scrollTop = elem.scrollHeight;
+          }
+        },
+        log(content) {
+          this.addMessageToView({ text: content, type: 'system' });
+        },
+      },
+
+      beforeMount() {
+        this.loadEndpoint();
+      }
+    });
+
+    function processRecieved(message) {
+      if (!message) {
+        return;
+      }
+      if (message.type === 'log') {
+        app.log(message.text);
+        return;
+      }
+      if (message.type === 'sync') {
+        if (message.event === 'removeUser') {
+          var chat = app.removeChat('user', message.user);
+        } else if (message.event === 'addUser') {
+          app.getOrAddChat('user', message.user);
+        }
+      } else if (message.type === 'connected') {
+        message.users.forEach(element => {
+          app.getOrAddChat('user', element);
+        });
+        message.groups.forEach(element => {
+          app.getOrAddChat('group', element)
+        })
+        app.addMessageToView({ text: 'User ' + message.user + '(' + message.connection + ') logged in', type: 'log' });
+      }
+      else if (message.group) {
+        // group send
+        message.chatType = 'group';
+        message.chatName = message.group;
+      } else if (message.to) {
+        // user send
+        message.chatType = 'user';
+        message.chatName = message.from;
+      }
+
+      app.addMessageToView(message);
+    }
+  </script>
+</body>
+
+</html>
