@@ -15,9 +15,12 @@ Please contact us if you are interested in trying this vnext feature!
     Check the [specs here](./serverless-websocket/specs/runtime-websocket-serverless.md).
 
     Demos:
-    * [🔥 [Live Demo](https://wssimplechatdemo.z13.web.core.windows.net)🔥 ][4 steps creating a chat](./serverless-websocket/samples/simple-chat/Readme.md) in either Azure Function way or Express way.
-    * [🔥 [Live Demo](https://serverless-ws-chat.azurewebsites.net/api/home?code=msSB2Zn5P1VSRITEjQpFotgAuPLWDnvqvT0zcV/hP3uEgBUnMrygfQ==&name=testuser1)🔥 ][A fully-functional server-less chatroom with group, user and history](./serverless-websocket/samples/advanced-chatroom/Readme.md) with Azure Function and Azure Storage.
-    * [🔥 [Live Demo](https://ws-whiteboard.azurewebsites.net/)🔥 ][A real-time Whiteboard](https://github.com/chenkennt/Whiteboard#websocket-version)
+    * [4 steps creating a chat](./serverless-websocket/samples/simple-chat/Readme.md) in either Azure Function way or Express way.
+        * 🔥 [Live Demo](https://wssimplechatdemo.z13.web.core.windows.net)
+    * [A fully-functional server-less chatroom with group, user and history](./serverless-websocket/samples/advanced-chatroom/Readme.md) with Azure Function and Azure Storage.
+        * 🔥 [Live Demo](https://serverless-ws-chat-demo.azurewebsites.net/?code=LJ0EgrwWYSkm5MXGAe2AvPKVRGTaYpqQ/pxzJaFpVvyCY4j53s055Q==) 
+    * [A real-time whiteboard](https://github.com/chenkennt/Whiteboard#websocket-version)
+        * 🔥 [Live Demo](https://ws-whiteboard.azurewebsites.net/)
 
 # Contributing
 
