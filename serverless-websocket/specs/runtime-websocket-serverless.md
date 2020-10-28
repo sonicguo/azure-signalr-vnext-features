@@ -102,18 +102,18 @@ The ASRS server tracks clients and has a result can be used to send messages to 
 
 | Actions | REST API With Default Hub | REST API With Specific Hub|
 |----|----|----|
-| Broadcast message | `POST /ws/api/v1?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}` | `POST /ws/api/v1/hubs/{hub}?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}` |
-| Send message to user | `POST /ws/api/v1//users/{id}`| `POST /ws/api/v1/hubs/{hub}/users/{id}`|
-| Send message to connection | `POST /ws/api/v1/connections/{connectionId}`| `POST /ws/api/v1/hubs/{hub}/connections/{connectionId}`|
-| Add connection to group | `PUT /ws/api/v1/groups/{group}/connections/{connectionId}`| `PUT /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
-| Remove connection from group| `DELETE /ws/api/v1/groups/{group}/connections/{connectionId}`| `DELETE /ws/api/v1/hubs/{hub}/groups/{group}/connections/{connectionId}`|
-| Add user to group | `PUT /ws/api/v1/groups/{group}/users/{user}`| `PUT /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Remove user from group| `DELETE /ws/api/v1/groups/{group}/users/{user}`| `DELETE /ws/api/v1/hubs/{hub}/groups/{group}/users/{user}`|
-| Send message to group| `POST /ws/api/v1/groups/{group}?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}`| `POST /ws/api/v1/hubs/{hub}/groups/{group}?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}`|
-| Close connection| `DELETE /ws/api/v1/connections/{connectionId}?reason={reason}`| `DELETE /ws/api/v1/hubs/{hub}/connections/{connectionId}?reason={reason}`|
-| Check if connection exists| `HEAD /ws/api/v1/connections/{connectionId}` | `HEAD /ws/api/v1/hubs/{hub}/connections/{connectionId}` |
-| Check if user exists (has connections)| `HEAD /ws/api/v1/users/{user}` | `HEAD /ws/api/v1/hubs/{hub}/users/{user}` |
-| Check if group exists (has connections)| `HEAD /ws/api/v1/groups/{group}` | `HEAD /ws/api/v1/hubs/{hub}/groups/{group}` |
+| Broadcast message | `POST /ws/api/messages?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}` | `POST /ws/api/hubs/{hub}/messages?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}` |
+| Send message to user | `POST /ws/api/users/{id}/messages`| `POST /ws/api/hubs/{hub}/users/{id}/messages`|
+| Send message to connection | `POST /ws/api/connections/{connectionId}/messages`| `POST /ws/api/hubs/{hub}/connections/{connectionId}/messages`|
+| Add connection to group | `PUT /ws/api/groups/{group}/connections/{connectionId}`| `PUT /ws/api/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Remove connection from group| `DELETE /ws/api/groups/{group}/connections/{connectionId}`| `DELETE /ws/api/hubs/{hub}/groups/{group}/connections/{connectionId}`|
+| Add user to group | `PUT /ws/api/users/{user}/groups/{group}`| `PUT /ws/api/hubs/{hub}/users/{user}/groups/{group}`|
+| Remove user from group| `DELETE /ws/api/users/{user}/groups/{group}`| `DELETE /ws/api/hubs/{hub}/users/{user}/groups/{group}`|
+| Send message to group| `POST /ws/api/groups/{group}/messages?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}`| `POST /ws/api/hubs/{hub}/groups/{group}/messages?excluded={excludeConnectionId1}&excluded={excludeConnectionId2}`|
+| Close connection| `DELETE /ws/api/connections/{connectionId}?reason={reason}`| `DELETE /ws/api/hubs/{hub}/connections/{connectionId}?reason={reason}`|
+| Check if connection exists| `HEAD /ws/api/connections/{connectionId}` | `HEAD /ws/api/hubs/{hub}/connections/{connectionId}` |
+| Check if user exists (has connections)| `HEAD /ws/api/users/{user}` | `HEAD /ws/api/hubs/{hub}/users/{user}` |
+| Check if group exists (has connections)| `HEAD /ws/api/groups/{group}` | `HEAD /ws/api/hubs/{hub}/groups/{group}` |
             
 ## Protocol Details
 
