@@ -5,7 +5,7 @@ As you can see in the [client page](./client/index.html), the client side uses t
 
 ## Try the live demo
 
-Try the [live chat demo Here](https://wssimplechatdemo.z13.web.core.windows.net/). This demo is a static webpage hosted in Azure Blob, and it by default points to our demo endpoint. You can change it to your endpoint to try your own demo with your endpoint succussfully setup with below steps.
+Try the [live chat demo Here](https://wssimpledemo.z13.web.core.windows.net/). This demo is a static webpage hosted in Azure Blob, and it by default points to our demo endpoint. You can change it to your endpoint to try your own demo with your endpoint succussfully setup with below steps.
 
 ![Sample run](./server-function-version/images/sample_run.png)
 

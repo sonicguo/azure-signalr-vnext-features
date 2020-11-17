@@ -56,7 +56,7 @@ For example, the below screenshot sets the upstream templates to `http://4290de1
 ![ngrok](./images/sample_set_upstream.png)
 
 ### Visit the chat
-Now it is all set, visit the page https://wssimplechatdemo.z13.web.core.windows.net/, type your own **Endpoint** and *Continue* to start your own chat.
+Now it is all set, visit the page https://wssimpledemo.z13.web.core.windows.net/, type your own **Endpoint** and *Continue* to start your own chat.
 
 ## Deploy the Chat to your Azure Function
 
@@ -67,4 +67,4 @@ Inside VS Code, `Ctrl+Shift+P` to invoke the Command Palette, select **Azure Fun
 Go to https://ws-manage.azurewebsites.net/api/manage and update Upstream value from `http://(id).ngrok.io/api/chat` to your Function Trigger Url.
 
 ### Run the chat
-Now visit https://wssimplechatdemo.z13.web.core.windows.net/, type your own `Endpoint` and *Continue* to start your serverless chat.
+Now visit https://wssimpledemo.z13.web.core.windows.net/, type your own `Endpoint` and *Continue* to start your serverless chat.

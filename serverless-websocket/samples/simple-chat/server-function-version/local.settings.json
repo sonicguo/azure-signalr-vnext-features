@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureSignalRConnectionString": "<Add your connection string here>",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+  },
+  "ConnectionStrings": {},
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "http://localhost:8080",
+    "CORSCredentials": true
+  }
+}
