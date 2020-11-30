@@ -16,7 +16,7 @@ Please contact us if you are interested in trying this vnext feature!
 
     Demos:
     * [4 steps creating a chat](./serverless-websocket/samples/simple-chat/Readme.md) in either Azure Function way or Express way.
-        * 🔥 [Live Demo](https://wssimplechatdemo.z13.web.core.windows.net)
+        * 🔥 [Live Demo](https://wssimpledemo.z13.web.core.windows.net/)
     * [A fully-functional server-less chatroom with group, user and history](./serverless-websocket/samples/advanced-chatroom/Readme.md) with Azure Function and Azure Storage.
         * 🔥 [Live Demo](https://serverless-ws-chat-demo.azurewebsites.net/?code=LJ0EgrwWYSkm5MXGAe2AvPKVRGTaYpqQ/pxzJaFpVvyCY4j53s055Q==) 
     * [A real-time whiteboard](https://github.com/chenkennt/Whiteboard#websocket-version)
