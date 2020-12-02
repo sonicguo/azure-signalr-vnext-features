@@ -1,7 +1,7 @@
 # A Simple Serverless Chat on WebSocket
 This is the server side hosted in Azure Function for the simple chat demo.
 
-Follow the steps described below to run the [chat demo](https://wssimplechatdemo.z13.web.core.windows.net/) towards your own endpoint.
+Follow the steps described below to run the [chat demo](https://wssimpledemo.z13.web.core.windows.net/) towards your own endpoint.
 
 ![Sample run](./images/sample_run.png)
 
