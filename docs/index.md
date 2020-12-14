@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## Welcome to the Web PubSub Service
 
-You can use the [editor on GitHub](https://github.com/Azure/azure-signalr-vnext-features/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+Welcome to the Web PubSub Service. It is a **_FAST_** bi-directional messaging service designed for high scalability and reliability. It manages the WebSocket clients for you, and provide powerful APIs for you to manage these clients and deliver real-time messages.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Introduction
 
-### Markdown
+The Web PubSub Service:
+* Maintain the lifecycle of your client WebSocket connections
+* Provide Upstream hooks for you to handle bussiness logic
+* Provide APIs for you to manipulate and send messages to these connected connections
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+With:
+- High availability
+- High scalability
+- High reliability
 
-```markdown
-Syntax highlighted code block
+It is _**Fast**_, _**Easy**_, and _**Strong**_
 
-# Header 1
-## Header 2
-### Header 3
+Check the [specs here](./../serverless-websocket/specs/runtime-websocket-serverless.md).
 
-- Bulleted
-- List
+Demos:
+* [4 steps creating a chat](./../serverless-websocket/samples/simple-chat/Readme.md) in either Azure Function way or Express way.
+    * 🔥 [Live Demo](https://wssimpledemo.z13.web.core.windows.net/)
+* [A fully-functional server-less chatroom with group, user and history](./../serverless-websocket/samples/advanced-chatroom/Readme.md) with Azure Function and Azure Storage.
+    * 🔥 [Live Demo](https://serverless-ws-chat-demo.azurewebsites.net/?code=LJ0EgrwWYSkm5MXGAe2AvPKVRGTaYpqQ/pxzJaFpVvyCY4j53s055Q==) 
+* [A real-time whiteboard](https://github.com/chenkennt/Whiteboard#websocket-version)
+    * 🔥 [Live Demo](https://ws-whiteboard.azurewebsites.net/)
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Azure/azure-signalr-vnext-features/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Found a mistake? Edit this page on [GitHub](https://github.com/Azure/azure-signalr-vnext-features/edit/master/docs/index.md).
