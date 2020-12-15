@@ -1,16 +1,12 @@
 - title: Simple Chat
-  permalink: /demos/chat
-  name: chat.md
+  name: chat
   demolink: https://wssimpledemo.z13.web.core.windows.net/
 - title: Advanced Chat
-  name: achat.md
-  permalink: /demos/achat
+  name: achat
   demolink: https://serverless-ws-chat-demo.azurewebsites.net/?code=LJ0EgrwWYSkm5MXGAe2AvPKVRGTaYpqQ/pxzJaFpVvyCY4j53s055Q==
 - title: Whiteboard
-  permalink: /demos/whiteboard
-  name: whiteboard.md
+  name: whiteboard
   demolink: https://ws-whiteboard.azurewebsites.net/
 - title: Apollo GraphQL
-  name: graphql.md
-  permalink: /demos/graphql
+  name: graphql
   demolink: https://wssimpledemo.z13.web.core.windows.net/

@@ -24,13 +24,13 @@
                 <ul class="nav bd-sidenav">
                   {%- for doc in site.data.demos -%}
                     {%- assign active = '' -%}
-
-                    {%- if page.name == doc.name -%}
+                    {%- assign filename = page.name | remove: '.md' -%}
+                    {%- if doc.name == filename -%}
                       {%- assign active = 'active bd-sidenav-active' -%}
                     {%- endif -%}
 
                     <li class="{{ active }}">
-                      <a href="{{ doc.permalink }}/">
+                      <a href="{{ site.baseurl }}/demos/{{doc.name}}/">
                         {{ doc.title }}
                       </a>
                     </li>
