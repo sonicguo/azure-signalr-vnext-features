@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Welcome to the Web PubSub Service
 permalink: /pubsub
 ---
