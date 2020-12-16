@@ -25,7 +25,7 @@
           {%- endif -%}
 
           <li{% unless active == nil %} class="{{ active }}"{% endunless %}>
-            <a class="{{page_slug}} {{doc_slug}}" href="{{ site.baseurl }}/{{ group_slug }}/{{ doc_slug }}/">
+            <a class="{{page_slug}} {{doc_slug}}" href="{{ site.baseurl }}/{{ group_slug }}/{{ doc_slug }}">
               {{ doc.title }}
             </a>
           </li>
