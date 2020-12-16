@@ -24,7 +24,7 @@
                 <ul class="nav bd-sidenav">
                   {%- for doc in site.data.demos -%}
                     {%- assign active = '' -%}
-                    {%- assign filename = page.name | remove: '.md' -%}
+                    {%- assign filename = page.name | split: '.' | first  -%}
                     {%- if doc.name == filename -%}
                       {%- assign active = 'active bd-sidenav-active' -%}
                     {%- endif -%}

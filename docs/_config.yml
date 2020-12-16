@@ -3,3 +3,9 @@ title: Azure Web PubSub Service
 description: The Azure Web PubSub Service for real-time bi-directional messaging
 authors:  "Vicancy"
 repo: https://github.com/Azure/azure-signalr-vnext-features/tree/master/serverless-websocket
+
+
+plugins:
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-toc

@@ -1,10 +1,9 @@
 ---
-layout: default
-permalink: /getting-started
-
+layout: docs
+title: Upstream
+group: concepts
+toc: true
 ---
-
-# Serverless WebSockets
 
 ## Goals
 

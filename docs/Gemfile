@@ -9,3 +9,4 @@ gem 'rspec'
 # gem "rails"
 
 gem 'github-pages'
+gem 'jekyll-toc'
