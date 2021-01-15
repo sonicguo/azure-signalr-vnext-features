@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Azure WebSocket Service REST API",
-    "version": "v1"
+    "title": "Azure Web PubSub Service REST API",
+    "version": "2020-10-01"
   },
   "paths": {
     "/api/health": {
@@ -31,714 +31,24 @@
         }
       }
     },
-    "/ws/api/hubs/{hub}/messages": {
+    "/api/messages": {
       "post": {
         "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Broadcast content inside request body to all the connected connections in the same hub.",
-        "operationId": "WebSocketConnectionApi_Broadcast",
-        "consumes": [
-          "application/octet-stream",
-          "text/plain"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "excluded",
-            "description": "Excluded connection Ids",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          },
-          {
-            "in": "body",
-            "name": "payloadMessage",
-            "required": true,
-            "schema": {
-              "format": "binary",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/users/{id}/messages": {
-      "post": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Send content inside request body to the specific user.",
-        "operationId": "WebSocketConnectionApi_SendToUser",
-        "consumes": [
-          "application/octet-stream",
-          "text/plain"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "description": "The user Id.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          },
-          {
-            "in": "body",
-            "name": "payloadMessage",
-            "required": true,
-            "schema": {
-              "format": "binary",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/connections/{connectionId}": {
-      "head": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Check if the connection with the given connectionId exists",
-        "operationId": "WebSocketConnectionApi_CheckConnectionExistence",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "connectionId",
-            "description": "The connection Id.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Close the client connection",
-        "operationId": "WebSocketConnectionApi_CloseClientConnection",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "connectionId",
-            "description": "The connection Id.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "reason",
-            "description": "The reason of the connection close.",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/connections/{connectionId}/messages": {
-      "post": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Send content inside request body to the specific connection.",
-        "operationId": "WebSocketConnectionApi_SendToConnection",
-        "consumes": [
-          "application/octet-stream",
-          "text/plain"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "connectionId",
-            "description": "The connection Id.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          },
-          {
-            "in": "body",
-            "name": "payloadMessage",
-            "required": true,
-            "schema": {
-              "format": "binary",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/groups/{group}": {
-      "head": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Check if there are any client connections inside the given group",
-        "operationId": "WebSocketConnectionApi_CheckGroupExistence",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/groups/{group}/messages": {
-      "post": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Send content inside request body to a group of connections.",
-        "operationId": "WebSocketConnectionApi_GroupBroadcast",
-        "consumes": [
-          "application/octet-stream",
-          "text/plain"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "excluded",
-            "description": "Excluded connection Ids",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "collectionFormat": "multi"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          },
-          {
-            "in": "body",
-            "name": "payloadMessage",
-            "required": true,
-            "schema": {
-              "format": "binary",
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/users/{user}": {
-      "head": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Check if there are any client connections connected for the given user",
-        "operationId": "WebSocketConnectionApi_CheckUserExistence",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "user",
-            "description": "The user Id.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/groups/{group}/connections/{connectionId}": {
-      "put": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Add a connection to the target group.",
-        "operationId": "WebSocketConnectionApi_AddConnectionToGroup",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "connectionId",
-            "description": "Target connection Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Remove a connection from the target group.",
-        "operationId": "WebSocketConnectionApi_RemoveConnectionFromGroup",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "connectionId",
-            "description": "Target connection Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/users/{user}/groups/{group}": {
-      "head": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Check whether a user exists in the target group.",
-        "operationId": "WebSocketConnectionApi_CheckUserExistenceInGroup",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "user",
-            "description": "Target user Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Add a user to the target group.",
-        "operationId": "WebSocketConnectionApi_AddUserToGroup",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "user",
-            "description": "Target user Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "ttl",
-            "description": "Specifies the seconds that the user exists in the group. If not set, the user lives in the group forever.",
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Remove a user from the target group.",
-        "operationId": "WebSocketConnectionApi_RemoveUserFromGroup",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "path",
-            "name": "user",
-            "description": "Target user Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/hubs/{hub}/users/{user}/groups": {
-      "delete": {
-        "tags": [
-          "websocket.customHub"
-        ],
-        "summary": "Remove a user from all groups.",
-        "operationId": "WebSocketConnectionApi_RemoveUserFromAllGroups",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "hub",
-            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore.",
-            "required": true,
-            "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
-          },
-          {
-            "in": "path",
-            "name": "user",
-            "description": "Target user Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The user is deleted"
-          },
-          "202": {
-            "description": "The delete request is accepted and service is handling the request int the background"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/messages": {
-      "post": {
-        "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
         "summary": "Broadcast content inside request body to all the connected to endpoint \"/ws/client\"",
-        "operationId": "WebSocketConnectionApi_DefaultHubBroadcast",
+        "operationId": "WebPubSubApi_Broadcast",
         "consumes": [
           "application/octet-stream",
           "text/plain"
         ],
         "parameters": [
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
           {
             "in": "query",
             "name": "excluded",
@@ -776,13 +86,13 @@
         }
       }
     },
-    "/ws/api/users/{id}/messages": {
+    "/api/users/{id}/messages": {
       "post": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
         "summary": "Send content inside request body to the specific user.",
-        "operationId": "WebSocketConnectionApi_SendToDefaultHubUser",
+        "operationId": "WebPubSubApi_SendToUser",
         "consumes": [
           "application/octet-stream",
           "text/plain"
@@ -797,6 +107,12 @@
           },
           {
             "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
             "name": "api-version",
             "type": "string",
             "default": "2020-10-01"
@@ -822,83 +138,13 @@
         }
       }
     },
-    "/ws/api/connections/{connectionId}": {
-      "head": {
-        "tags": [
-          "websocket.defaultHub"
-        ],
-        "summary": "Check if the connection with the given connectionId exists",
-        "operationId": "WebSocketConnectionApi_CheckDefaultHubConnectionExistence",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "connectionId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "websocket.defaultHub"
-        ],
-        "summary": "Close the client connection",
-        "operationId": "WebSocketConnectionApi_CloseDefaultHubClientConnection",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "connectionId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "reason",
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Success"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/connections/{connectionId}/messages": {
+    "/api/connections/{connectionId}/messages": {
       "post": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
         "summary": "Send content inside request body to the specific connection.",
-        "operationId": "WebSocketConnectionApi_SendToDefaultHubConnection",
+        "operationId": "WebPubSubApi_SendToConnection",
         "consumes": [
           "application/octet-stream",
           "text/plain"
@@ -913,6 +159,12 @@
           },
           {
             "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
             "name": "api-version",
             "type": "string",
             "default": "2020-10-01"
@@ -938,48 +190,13 @@
         }
       }
     },
-    "/ws/api/groups/{group}": {
-      "head": {
-        "tags": [
-          "websocket.defaultHub"
-        ],
-        "summary": "Check if there are any client connections inside the given group",
-        "operationId": "WebSocketConnectionApi_CheckDefaultHubGroupExistence",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "group",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "api-version",
-            "type": "string",
-            "default": "2020-10-01"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "default": {
-            "description": "Error response",
-            "x-ms-error-response": true
-          }
-        }
-      }
-    },
-    "/ws/api/groups/{group}/messages": {
+    "/api/groups/{group}/messages": {
       "post": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
         "summary": "Send content inside request body to a group of connections.",
-        "operationId": "WebSocketConnectionApi_DefaultHubGroupBroadcast",
+        "operationId": "WebPubSubApi_GroupBroadcast",
         "consumes": [
           "application/octet-stream",
           "text/plain"
@@ -990,6 +207,12 @@
             "name": "group",
             "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1029,18 +252,26 @@
         }
       }
     },
-    "/ws/api/users/{user}": {
-      "head": {
+    "/api/connections/{connectionId}": {
+      "get": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
-        "summary": "Check if there are any client connections connected for the given user",
-        "operationId": "WebSocketConnectionApi_CheckDefaultHubUserExistence",
+        "summary": "Check if the connection with the given connectionId exists",
+        "operationId": "WebPubSubApi_CheckConnectionExistence",
         "parameters": [
           {
             "in": "path",
-            "name": "user",
+            "name": "connectionId",
+            "description": "The connection Id.",
             "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1062,28 +293,26 @@
             "x-ms-error-response": true
           }
         }
-      }
-    },
-    "/ws/api/groups/{group}/connections/{connectionId}": {
-      "put": {
+      },
+      "head": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
-        "summary": "Add a connection to the target group.",
-        "operationId": "WebSocketConnectionApi_AddConnectionToDefaultHubGroup",
+        "summary": "Check if the connection with the given connectionId exists",
+        "operationId": "WebPubSubApi_CheckConnectionExistence",
         "parameters": [
           {
             "in": "path",
-            "name": "group",
-            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "name": "connectionId",
+            "description": "The connection Id.",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
           },
           {
-            "in": "path",
-            "name": "connectionId",
-            "description": "Target connection Id",
-            "required": true,
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1108,23 +337,110 @@
       },
       "delete": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
-        "summary": "Remove a connection from the target group.",
-        "operationId": "WebSocketConnectionApi_RemoveConnectionFromDefaultHubGroup",
+        "summary": "Close the client connection",
+        "operationId": "WebPubSubApi_CloseClientConnection",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connectionId",
+            "description": "Target connection Id",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "reason",
+            "description": "The reason closing the client connection",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      }
+    },
+    "/api/groups/{group}": {
+      "get": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check if there are any client connections inside the given group",
+        "operationId": "WebPubSubApi_CheckGroupExistence",
         "parameters": [
           {
             "in": "path",
             "name": "group",
             "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check if there are any client connections inside the given group",
+        "operationId": "WebPubSubApi_CheckGroupExistence",
+        "parameters": [
+          {
             "in": "path",
-            "name": "connectionId",
-            "description": "Target connection Id",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1148,26 +464,361 @@
         }
       }
     },
-    "/ws/api/users/{user}/groups/{group}": {
+    "/api/users/{user}": {
+      "get": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check if there are any client connections connected for the given user",
+        "operationId": "WebPubSubApi_CheckUserExistence",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
       "head": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
-        "summary": "Check whether a user exists in the target group.",
-        "operationId": "WebSocketConnectionApi_CheckUserExistenceInDefaultHubGroup",
+        "summary": "Check if there are any client connections connected for the given user",
+        "operationId": "WebPubSubApi_CheckUserExistence",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      }
+    },
+    "/api/groups/{group}/connections/{connectionId}": {
+      "put": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Add a connection to the target group.",
+        "operationId": "WebPubSubApi_AddConnectionToGroup",
         "parameters": [
           {
             "in": "path",
             "name": "group",
             "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "connectionId",
+            "description": "Target connection Id",
+            "required": true,
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Remove a connection from the target group.",
+        "operationId": "WebPubSubApi_RemoveConnectionFromGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "connectionId",
+            "description": "Target connection Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      }
+    },
+    "/api/connections/{connectionId}/groups/{group}": {
+      "put": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Add a connection to the target group.",
+        "operationId": "WebPubSubApi_AddConnectionToGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "connectionId",
+            "description": "Target connection Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Remove a connection from the target group.",
+        "operationId": "WebPubSubApi_RemoveConnectionFromGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "connectionId",
+            "description": "Target connection Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      }
+    },
+    "/api/groups/{group}/users/{user}": {
+      "get": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebPubSubApi_CheckUserExistenceInGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
           },
           {
             "in": "path",
             "name": "user",
             "description": "Target user Id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebPubSubApi_CheckUserExistenceInGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1192,23 +843,30 @@
       },
       "put": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
         "summary": "Add a user to the target group.",
-        "operationId": "WebSocketConnectionApi_AddUserToDefaultHubGroup",
+        "operationId": "WebPubSubApi_AddUserToGroup",
         "parameters": [
           {
             "in": "path",
             "name": "group",
             "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
           },
           {
             "in": "path",
             "name": "user",
             "description": "Target user Id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1237,23 +895,30 @@
       },
       "delete": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
         ],
         "summary": "Remove a user from the target group.",
-        "operationId": "WebSocketConnectionApi_RemoveUserFromDefaultHubGroup",
+        "operationId": "WebPubSubApi_RemoveUserFromGroup",
         "parameters": [
           {
             "in": "path",
             "name": "group",
             "description": "Target group name, which length should be greater than 0 and less than 1025.",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
           },
           {
             "in": "path",
             "name": "user",
             "description": "Target user Id",
             "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
@@ -1274,19 +939,221 @@
         }
       }
     },
-    "/ws/api/users/{user}/groups": {
+    "/api/users/{user}/groups/{group}": {
+      "get": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebPubSubApi_CheckUserExistenceInGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Check whether a user exists in the target group.",
+        "operationId": "WebPubSubApi_CheckUserExistenceInGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "webpubsub"
+        ],
+        "summary": "Add a user to the target group.",
+        "operationId": "WebPubSubApi_AddUserToGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "ttl",
+            "description": "Specifies the seconds that the user exists in the group. If not set, the user lives in the group forever.",
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      },
       "delete": {
         "tags": [
-          "websocket.defaultHub"
+          "webpubsub"
+        ],
+        "summary": "Remove a user from the target group.",
+        "operationId": "WebPubSubApi_RemoveUserFromGroup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group",
+            "description": "Target group name, which length should be greater than 0 and less than 1025.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "description": "Target user Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "api-version",
+            "type": "string",
+            "default": "2020-10-01"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error response",
+            "x-ms-error-response": true
+          }
+        }
+      }
+    },
+    "/api/users/{user}/groups": {
+      "delete": {
+        "tags": [
+          "webpubsub"
         ],
         "summary": "Remove a user from all groups.",
-        "operationId": "WebSocketConnectionApi_RemoveUserFromAllDefaultHubGroups",
+        "operationId": "WebPubSubApi_RemoveUserFromAllGroups",
         "parameters": [
           {
             "in": "path",
             "name": "user",
             "description": "Target user Id",
             "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_`,.[\\]]{0,127}$"
+          },
+          {
+            "in": "query",
+            "name": "hub",
+            "description": "Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. When it is not set, it uses the default hub",
             "type": "string"
           },
           {
