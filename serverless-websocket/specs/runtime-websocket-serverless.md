@@ -98,7 +98,7 @@ Each **event** in the above lifecycle belongs to a specific **category**. When e
     
 ### Calling the Client from the Upstream
 
-The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the [REST API](./ws.swagger.json) to send messages to clients.
+The ASRS server tracks clients and has a result can be used to send messages to a specific client or a set of clients. You can use the [REST API](./swagger.json) to send messages to clients.
 
 | Actions | REST API With Default Hub | REST API With Specific Hub|
 |----|----|----|
